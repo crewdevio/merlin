@@ -2,11 +2,12 @@ import { Merlin } from "./mod.ts";
 
 const merlin = new Merlin();
 
-merlin.fetch_equal("load text", {
-  url: "https://deno.land/std/examples/welcome.ts",
-  type: "text",
-  message: "eval console.log",
-  toBe: (val: any) => {
-    return val;
+merlin.test_equal("test", {
+  expect: () => 2 + 2,
+  toBe: async () => {
+    return 4;
   },
+  message: "error 2 + 2",
+  ignore: Deno.build.os === "linux",
+  strict: false,
 });
