@@ -11,7 +11,7 @@ import {
   runBenchmarks,
   BenchmarkResult,
   BenchmarkRunOptions,
-} from "./deps.ts";
+} from "../deps.ts";
 
 interface Bench {
   name: string;

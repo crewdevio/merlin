@@ -6,6 +6,5 @@
  *
  */
 
-
-export * from "./merlin.ts";
-export * from "./maven.ts";
+export * from "./src/merlin.ts";
+export * from "./src/maven.ts";
