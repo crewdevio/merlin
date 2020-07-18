@@ -1,49 +1,76 @@
-interface Configuration{
+export interface testConfig {
+  ignore?: boolean;
+  expect(): Promise<any> | any;
+  toBe(): Promise<any> | any;
   strict?: boolean;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
   only?: boolean;
-  ignore?: boolean;
-}
-
-export interface testConfig extends Configuration {
-  expect(): any;
-  toBe(value?: any): any;
-}
-
-export interface length extends Configuration {
-  value: Function;
-  toBe(): number;
 }
 
 export interface Test extends testConfig {
   label: string;
 }
 
-export interface Config extends Configuration {
-  value: Function;
+export interface Config {
+  ignore?: boolean;
+  value(): Promise<any> | any;
+  message?: string;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
 }
 
-export interface Fetch_equal extends Configuration{
+export interface Fetch_equal {
   url: string;
   type: "text" | "json";
-  toBe: Function;
+  toBe(): Promise<any> | any;
+  message?: string;
+  ignore?: boolean;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
 }
 
-export interface ArrayContains extends Configuration {
-  value(): Array<any>;
-  Contains(): any;
+export interface ArrayContains {
+  ignore?: boolean;
+  value(): Promise<any[]> | any[];
+  Contains(): Promise<any> | any;
+  message?: string;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
 }
 
-export interface StringContains extends Configuration{
-  value(): string;
-  Contains(): string;
+export interface StringContains {
+  ignore?: boolean;
+  value(): Promise<string> | string;
+  Contains(): Promise<string> | string;
+  message?: string;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
 }
 
-export interface NotEqual extends Configuration{
-  expect: Function;
-  notBe: Function;
+export interface NotEqual {
+  expect(): Promise<any> | any;
+  notBe(): Promise<any> | any;
+  ignore?: boolean;
+  message?: string;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
+}
+
+export interface Length {
+  ignore?: boolean;
+  expect(): Promise<any[]> | any[];
+  toBe(): Promise<any[]> | any[];
+  message?: string;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
 }
 
 export type Tests = Array<Test>;

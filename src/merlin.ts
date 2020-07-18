@@ -13,6 +13,7 @@ import {
   assertNotEquals,
   assertArrayContains,
   assertStringContains,
+  assertMatch,
 } from "../deps.ts";
 
 import {
@@ -23,7 +24,7 @@ import {
   StringContains,
   Tests,
   testConfig,
-  length,
+  Length,
 } from "./types.ts";
 
 /**
@@ -35,17 +36,8 @@ export class Merlin {
   /**
    * evaluate if two values ​​are equal.
    * if the data is not the same it throws an error.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} expect - returns the data to evaluate.
-   * @param {Function} toBe - returns the data data that expects to be valid.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} strict - compare data strictly.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    */
-  public test_equal(
+  public testEqual(
     label: string,
     {
       expect,
@@ -62,13 +54,9 @@ export class Merlin {
       name: label,
       fn: async () => {
         if (strict) {
-          assertStrictEquals(
-            await expect(),
-            await toBe(await expect()),
-            message
-          );
+          assertStrictEquals(await expect(), await toBe(), message);
         } else {
-          assertEquals(await expect(), await toBe(await expect()), message);
+          assertEquals(await expect(), await toBe(), message);
         }
       },
       ignore,
@@ -81,16 +69,8 @@ export class Merlin {
   /**
    * evaluate if two values ​​are not equal.
    * if they are not different throw an error.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} expect - returns the data to evaluate.
-   * @param {Function} notBe - returns the data data that expects to not be valid.
-   * @param {config} ignore - ignore the test based on an expression that returns true or false.
-   * @param {config} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    */
-  public test_notEqual(
+  public testNotEqual(
     label: string,
     {
       expect,
@@ -117,17 +97,8 @@ export class Merlin {
   /**
    * evaluate multiple equality tests.
    * if the data is not the same it throws an error.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} expect - returns the data to evaluate.
-   * @param {Function} toBe - returns the data data that expects to be valid.
-   * @param {config} ignore - ignore the test based on an expression that returns true or false.
-   * @param {config} message - displays a message in case the test fails.
-   * @param {config} strict - compare data strictly.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    */
-  public eval_equals(tests: Tests) {
+  public evalEquals(tests: Tests) {
     for (const {
       expect,
       label,
@@ -159,18 +130,9 @@ export class Merlin {
   /**
    * evaluate if two values ​​are equal.
    * If the request data is not the same as expected, it throws an error.
-   * @param {string} label - text to be shown in the test.
-   * @param {string} ulr - url to make the request get.
-   * @param {Function} toBe - returns the data data that expects to be valid.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {string} type - type of data to which the request will be converted.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    */
 
-  public fetch_equal(
+  public fetchEqual(
     label: string,
     {
       toBe,
@@ -193,7 +155,7 @@ export class Merlin {
         } else {
           data = await response.json();
         }
-        assertEquals(await data, await toBe(await data), message);
+        assertEquals(await data, await toBe(), message);
       },
       ignore,
       only,
@@ -205,16 +167,8 @@ export class Merlin {
   /**
    * evaluates that the array contains the data.
    * if the array does not contain the data it throws an error.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the array to evaluate.
-   * @param {Function} Contains - returns the data that the array must have.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    */
-  public array_contains(
+  public arrayContains(
     label: string,
     {
       Contains,
@@ -240,18 +194,9 @@ export class Merlin {
 
   /**
    * evaluates that the string contains the data.
-   * if the string does not contain the data it throws an error.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the string to evaluate.
-   * @param {Function} Contains - returns the data that the string must have.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public string_contains(
+  public stringContains(
     label: string,
     {
       Contains,
@@ -277,16 +222,9 @@ export class Merlin {
 
   /**
    * evaluates if a data is null.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public be_null(
+  public beNull(
     label: string,
     { value, ignore, message, Ops = true, Resources = true, only }: Config
   ) {
@@ -294,7 +232,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert((await value()) === null, message);
+        assertEquals(await value(), null, message);
       },
       only,
       sanitizeOps: Ops,
@@ -304,16 +242,9 @@ export class Merlin {
 
   /**
    * evaluates if a data is a falsy value.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public be_falsy(
+  public beFalsy(
     label: string,
     { value, ignore, message, Ops = true, Resources = true, only }: Config
   ) {
@@ -331,16 +262,9 @@ export class Merlin {
 
   /**
    * evaluates if a data is a truthy value.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public be_truthy(
+  public beTruthy(
     label: string,
     { value, ignore, message, Ops = true, Resources = true, only }: Config
   ) {
@@ -358,16 +282,9 @@ export class Merlin {
 
   /**
    * evaluates if a data is a bigInt value.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public is_bigInt(
+  public isBigInt(
     label: string,
     { value, ignore, message, Ops = true, Resources = true, only }: Config
   ) {
@@ -385,16 +302,9 @@ export class Merlin {
 
   /**
    * evaluates if a data is zero.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public is_zero(
+  public isZero(
     label: string,
     { value, ignore, message, Ops = true, Resources = true, only }: Config
   ) {
@@ -412,16 +322,9 @@ export class Merlin {
 
   /**
    * evaluates if a data is NaN value.
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {string} message - displays a message in case the test fails.
-   * @param {boolean} only - run only tests that have only: true
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
    *
    */
-  public is_NaN(
+  public isNaN(
     label: string,
     { value, ignore, message, Ops = true, Resources = true, only }: Config
   ) {
@@ -438,31 +341,116 @@ export class Merlin {
   }
 
   /**
-   * evaluates if a data have a x lengtj
-   * @param {string} label - text to be shown in the test.
-   * @param {Function} value - returns the data to evaluate.
-   * @param {Function} toBe - returns the number value digited
-   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
-   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
-   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
+   * evaluates if a data have a x length
    *
    */
-  public have_length(
+  public sameLength(
     label: string,
     {
-      value,
+      expect,
       toBe,
       ignore,
       Ops = true,
       Resources = true,
-    }: length
+      message,
+      only,
+    }: Length
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
-        assert((await value().length) === await toBe());
+        assert((await expect()).length === (await toBe()).length, message);
       },
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a regular expression match
+   *
+   */
+  public testRegExp(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assertMatch(await expect(), await toBe(), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a data is a function
+   *
+   */
+  public isFunction(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert(typeof (await value()) === "function", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a data is a symbol
+   *
+   */
+  public isSymbol(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert(typeof (await value()) === "symbol", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a data is undefined
+   *
+   */
+  public isUndefined(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert(typeof (await value()) === "undefined", message);
+      },
+      ignore,
+      only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
     });
