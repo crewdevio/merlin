@@ -437,13 +437,22 @@ export class Merlin {
     });
   }
 
+  /**
+   * evaluates if a data have a x lengtj
+   * @param {string} label - text to be shown in the test.
+   * @param {Function} value - returns the data to evaluate.
+   * @param {Function} toBe - returns the number value digited
+   * @param {boolean} ignore - ignore the test based on an expression that returns true or false.
+   * @param {boolean} Ops - ends asynchronous operations that don't end. default (true)
+   * @param {boolean} Resources - close all processes that do not finish to avoid resource leak. default (true)
+   *
+   */
   public have_length(
     label: string,
     {
       value,
       toBe,
       ignore,
-      message,
       Ops = true,
       Resources = true,
     }: length
@@ -452,7 +461,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert((await value().length) === await toBe(), message);
+        assert((await value().length) === await toBe());
       },
       sanitizeOps: Ops,
       sanitizeResources: Resources,
