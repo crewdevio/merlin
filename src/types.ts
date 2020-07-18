@@ -1,12 +1,12 @@
 export interface testConfig {
   ignore?: boolean;
-  expect(): any;
-  toBe(value?: any): any;
+  expect(): Promise<any> | any;
+  toBe(): Promise<any> | any;
   strict?: boolean;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
-  only: boolean;
+  only?: boolean;
 }
 
 export interface Test extends testConfig {
@@ -15,7 +15,7 @@ export interface Test extends testConfig {
 
 export interface Config {
   ignore?: boolean;
-  value: Function;
+  value(): Promise<any> | any;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
@@ -25,7 +25,7 @@ export interface Config {
 export interface Fetch_equal {
   url: string;
   type: "text" | "json";
-  toBe: Function;
+  toBe(): Promise<any> | any;
   message?: string;
   ignore?: boolean;
   Ops?: boolean;
@@ -35,8 +35,8 @@ export interface Fetch_equal {
 
 export interface ArrayContains {
   ignore?: boolean;
-  value(): Array<any>;
-  Contains(): any;
+  value(): Promise<any[]> | any[];
+  Contains(): Promise<any> | any;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
@@ -45,8 +45,8 @@ export interface ArrayContains {
 
 export interface StringContains {
   ignore?: boolean;
-  value(): string;
-  Contains(): string;
+  value(): Promise<string> | string;
+  Contains(): Promise<string> | string;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
@@ -54,8 +54,8 @@ export interface StringContains {
 }
 
 export interface NotEqual {
-  expect: Function;
-  notBe: Function;
+  expect: Promise<any> | any;
+  notBe: Promise<any> | any;
   ignore?: boolean;
   message?: string;
   Ops?: boolean;

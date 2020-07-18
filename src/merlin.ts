@@ -13,6 +13,7 @@ import {
   assertNotEquals,
   assertArrayContains,
   assertStringContains,
+  assertMatch,
 } from "../deps.ts";
 
 import {
@@ -23,7 +24,7 @@ import {
   StringContains,
   Tests,
   testConfig,
-} from "../types.ts";
+} from "./types.ts";
 
 /**
  * testing framework for deno inspire in jest 🧙‍♂️
@@ -61,13 +62,9 @@ export class Merlin {
       name: label,
       fn: async () => {
         if (strict) {
-          assertStrictEquals(
-            await expect(),
-            await toBe(await expect()),
-            message
-          );
+          assertStrictEquals(await expect(), await toBe(), message);
         } else {
-          assertEquals(await expect(), await toBe(await expect()), message);
+          assertEquals(await expect(), await toBe(), message);
         }
       },
       ignore,
@@ -192,7 +189,7 @@ export class Merlin {
         } else {
           data = await response.json();
         }
-        assertEquals(await data, await toBe(await data), message);
+        assertEquals(await data, await toBe(), message);
       },
       ignore,
       only,
@@ -293,7 +290,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert((await value()) === null, message);
+        assertEquals(await value(), null, message);
       },
       only,
       sanitizeOps: Ops,
@@ -430,6 +427,78 @@ export class Merlin {
       fn: async () => {
         assert(isNaN(await value()), message);
       },
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  public test_RegExp(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assertMatch(await expect(), await toBe(), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  public is_fn(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert(typeof (await value()) === "function", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  public is_symbol(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert(typeof (await value()) === "symbol", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  public is_undefined(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert(typeof (await value()) === "undefined", message);
+      },
+      ignore,
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
