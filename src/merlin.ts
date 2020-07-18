@@ -23,7 +23,8 @@ import {
   StringContains,
   Tests,
   testConfig,
-} from "../types.ts";
+  length,
+} from "./types.ts";
 
 /**
  * testing framework for deno inspire in jest 🧙‍♂️
@@ -431,6 +432,28 @@ export class Merlin {
         assert(isNaN(await value()), message);
       },
       only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  public have_length(
+    label: string,
+    {
+      value,
+      toBe,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+    }: length
+  ) {
+    this.Test({
+      name: label,
+      ignore,
+      fn: async () => {
+        assert((await value().length) === await toBe(), message);
+      },
       sanitizeOps: Ops,
       sanitizeResources: Resources,
     });
