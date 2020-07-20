@@ -22,39 +22,30 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 
 ### All Matchers
 
-- `testEqual(label: string, config)`_Compare two values and throws an error if the expect and toBe are not equal._
-
-- `testNotEqual(label: string, config)`_Compare two values and throws an error if the expect and notBe are equal._
-
-- `evalEquals(testEqual[])` _evaluate multiple equality tests in an array. If the data is not the same it throws an error._
-
-- `fetchEqual(label: string, config)` _evaluate if two values ​​are equal. If the request data is not the same as expected, it throws an error._
-
-- `arrayContains(label: string, config)`_evaluates that the array contains an especific data. if the array does not contain the data it throws an error._
-
-- `stringContains(label: string, config)`_evaluates if a string contains an especific word. if the string does not contain the word it throws an error._
-
-- `beNull(label: string, config)` _evaluates if a data is null._
-
-- `beFalsy(label: string, config)`_evaluates if a data is a falsy value._
-
-- `beTruthy(label: string, config)`_evaluates if a data is a truthy value._
-
-- `isBigInt(label: string, config)`_evaluates if a data is a bigInt value type._
-
-- `isZero(label: string, config)`_evaluates if a data is a Zero_
-
-- `isNaN(label: string, config)`_evaluates if a data is NaN value._
-
-- `sameLength(label: string, config)`_evaluates if data has a especific length_
-
-- `testRegExp(label: string, config)`_evaluates if a regular expression match_
-
-- `isFunction(label: string, config)` _evaluates if a data is a function_
-
-- `isSymbol(label: string, config)`_evaluates if a data is a symbol_
-
-- `isUndefined(label: string, config)`_evaluates if a data is undefined_
+- `testEqual(label: string, config)` Compare two values and throws an error if the expect and toBe are not equal
+- `testNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
+- `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the data is not the same it throws an error
+- `fetchEqual(label: string, config)` evaluate if two values ​​are equal. If the request data is not the same as expected, it throws an error
+- `arrayContains(label: string, config)` evaluates that the array contains an especific data. if the array does not contain the data it throws an error
+- `stringContains(label: string, config)` evaluates if a string contains an especific word. if the string does not contain the word it throws an error
+- `beNull(label: string, config)` evaluates if a data is null
+- `beFalsy(label: string, config)` evaluates if a data is a falsy value
+- `beTruthy(label: string, config)` evaluates if a data is a truthy value
+- `isBigInt(label: string, config)` evaluates if a data is a bigInt value type
+- `isZero(label: string, config)` evaluates if a data is a Zero
+- `isNaN(label: string, config)` evaluates if a data is NaN value
+- `sameLength(label: string, config)` evaluates if data has a especific length
+- `testRegExp(label: string, config)` evaluates if a regular expression match
+- `isFunction(label: string, config)` evaluates if a data is a function
+- `isSymbol(label: string, config)` evaluates if a data is a symbol
+- `isUndefined(label: string, config)` evaluates if a data is undefined
+- `testSame(label: string, config)`
+- `testGreaterOrEqual(label: string, config)`
+- `testGreater(label: string, config)`
+- `testLess(label: string, config)`
+- `testLessOrEqual(label: string, config)`
+- `testInstanceOf(label: string, config)`
+- `testFloat(label: string, config)`
 
 ### Basic Use
 
@@ -108,7 +99,7 @@ all assertions have parameters that they can receive, these parameters can chang
 - `Resources (optional)` receives a boolean, terminates all asynchronous processes that interact with the system. by default is `true`.
 - `only (optional)` receives a boolean, only tests that have `only in true` will be executed, the rest will not run.
 
-## about resources and ops sanitizers
+### about resources and ops sanitizers
 
 Certain actions in Deno create resources in the resource table . These resources should be closed after you are done using them.
 
@@ -126,13 +117,14 @@ async function writeSomething(): Promise<string> {
 }
 
 test.testEqual("Leak resources test", {
-  expect:() => "test",
-  toBe:() =>writeSomething(),
+  expect: async () => await writeSomething(),
+  toBe: () => "test",
   only: true,
   Ops: false,
-  Resources: false
+  Resources: false,
 });
 ```
+
 ```sh
 deno test
 
@@ -140,6 +132,7 @@ test Leak resources test ... ok (5ms)
 
 test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
+
 ### Multiple tests
 
 `example.test.ts`
@@ -263,12 +256,14 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
 ### testRegExp
+
 ```typescript
-test.testRegExp("regEx match",{
-  expect:()=> "https://google.com",
-  toBe:()=> new RegExp("^https?:\/\/[a-z.]+\.com$"),
-})
+test.testRegExp("regEx match", {
+  expect: () => "https://google.com",
+  toBe: () => new RegExp("^https?://[a-z.]+.com$"),
+});
 ```
+
 ```sh
 deno test
 
@@ -276,3 +271,28 @@ test regEx match ... ok (6ms)
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (342ms)
 ```
+
+### Usin async code.
+
+you can use asynchronous code by adding `async` in `expect`, `toBe` and `value` functions.
+
+example
+
+```typescript
+const test = new Merlin();
+
+test.testEqual("get error 404", {
+  async expect() {
+    const response = await fetch("https://deno.land/std/example/examples.ts");
+
+    const data = response.text();
+
+    return data;
+  },
+  toBe() {
+    return "404: Not Found";
+  },
+});
+```
+
+> **Note**: all the methods of the merlin class support asyn function since they have top level await

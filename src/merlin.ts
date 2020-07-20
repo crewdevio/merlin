@@ -455,4 +455,195 @@ export class Merlin {
       sanitizeResources: Resources,
     });
   }
+
+  /**
+   * expect the two values ​​to be strictly equal
+   */
+  public testSame(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assertStrictEquals(await expect(), await toBe(), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect the expected value to be greater than or equal
+   */
+  public testGreaterOrEqual(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert((await expect()) >= (await toBe()), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect the expected value to be greater
+   */
+  public testGreater(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert((await expect()) > (await toBe()), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect the expected value to be less.
+   */
+  public testLess(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert((await expect()) < (await toBe()), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect the expected value to be less or equal.
+   */
+  public testLessOrEqual(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert((await expect()) <= (await toBe()), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect both values ​​to be instances of the same class
+   */
+  public testInstanceOf(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        assert((await expect()) instanceof (await toBe()), message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  public testFloat(
+    label: string,
+    {
+      expect,
+      toBe,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+      strict,
+    }: testConfig
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        if (strict) {
+          assertStrictEquals(await expect(), await toBe(), message);
+        } else {
+          assertEquals(await expect(), await toBe(), message);
+        }
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
 }
