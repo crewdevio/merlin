@@ -25,7 +25,7 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `testEqual(label: string, config)` Compare two values and throws an error if the expect and toBe are not equal
 - `testNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
 - `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the data is not the same it throws an error
-- `fetchEqual(label: string, config)` evaluate if two values ​​are equal. If the request data is not the same as expected, it throws an error
+- `fetchEqual(label: string, config)` evaluate if two values are equal. If the request data is not the same as expected, it throws an error
 - `arrayContains(label: string, config)` evaluates that the array contains an especific data. if the array does not contain the data it throws an error
 - `stringContains(label: string, config)` evaluates if a string contains an especific word. if the string does not contain the word it throws an error
 - `beNull(label: string, config)` evaluates if a data is null
@@ -39,13 +39,13 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `isFunction(label: string, config)` evaluates if a data is a function
 - `isSymbol(label: string, config)` evaluates if a data is a symbol
 - `isUndefined(label: string, config)` evaluates if a data is undefined
-- `testSame(label: string, config)`
-- `testGreaterOrEqual(label: string, config)`
-- `testGreater(label: string, config)`
-- `testLess(label: string, config)`
-- `testLessOrEqual(label: string, config)`
-- `testInstanceOf(label: string, config)`
-- `testFloat(label: string, config)`
+- `testSame(label: string, config)` evaluates if two values are strictly the same
+- `testGreaterOrEqual(label: string, config)` evaluates whether the expected data is greater than or equal to another
+- `testGreater(label: string, config)` evaluates whether the expected data is greater than another
+- `testLess(label: string, config)` evaluates if the expected data is less than another
+- `testLessOrEqual(label: string, config)` evaluates if the expected data is less than or equal to another
+- `testInstanceOf(label: string, config)` evaluates that one object is an instance of another
+- `testFloat(label: string, config)` evaluates if two decimal numbers are equal
 
 ### Basic Use
 
