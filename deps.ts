@@ -6,5 +6,6 @@
  *
  */
 
+export * from "https://deno.land/x/pretty_benching@v0.1.2/mod.ts";
 export * from "https://deno.land/std/testing/asserts.ts";
 export * from "https://deno.land/std/testing/bench.ts";

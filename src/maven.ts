@@ -11,6 +11,8 @@ import {
   runBenchmarks,
   BenchmarkResult,
   BenchmarkRunOptions,
+  prettyBenchmarkProgress,
+  prettyBenchmarkResult,
 } from "../deps.ts";
 
 interface Bench {
@@ -40,10 +42,21 @@ export class Maven {
 
   public async runBench(config?: BenchmarkRunOptions) {
     this.config = config as BenchmarkRunOptions;
-    return runBenchmarks(config);
+    return runBenchmarks(config, prettyBenchmarkProgress());
   }
 
   public async success() {
     return await this.runBench(this.config);
+  }
+
+  public Result(graphBars = 5) {
+    return prettyBenchmarkResult({
+      parts: {
+        extraMetrics: true,
+        graph: true,
+        threshold: true,
+        graphBars,
+      },
+    });
   }
 }
