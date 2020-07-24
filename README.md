@@ -100,7 +100,7 @@ import { Merlin } from "https://x.nest.land/merlin@1.0.0/mod.ts";
 - from `github repo`
 
 ```typescript
-import { Merlin } from "http://denopkg.com/crewdevio/merlin/cli.ts";
+import { Merlin } from "http://denopkg.com/crewdevio/merlin/mod.ts";
 ```
 
 ### Basic Use
