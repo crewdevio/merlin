@@ -2,6 +2,26 @@
   <img src="http://pixelartmaker.com/art/b5da8523654c61c.png" width="130px" />
   <h3 align="center">Testing and Benchmarking framework for deno 🧙‍♂️</h3>
 </p>
+<p align="center">
+   <a href="https://github.com/crewdevio/merlin/issues">
+     <img alt="GitHub issues" src="https://img.shields.io/github/issues/crewdevio/merlin">
+   </a>
+   <a href="https://github.com/crewdevio/merlin/network">
+     <img alt="GitHub forks" src="https://img.shields.io/github/forks/crewdevio/merlin">
+   </a>
+   <a href="https://github.com/crewdevio/merlin/stargazers">
+     <img alt="GitHub stars" src="https://img.shields.io/github/stars/crewdevio/merlin">
+   </a>
+   <a href="https://github.com/crewdevio/merlin/blob/master/LICENSE">
+     <img alt="GitHub license" src="https://img.shields.io/github/license/crewdevio/merlin">
+   </a>
+   <a href="https://deno.land">
+     <img src="https://img.shields.io/badge/deno-%5E1.2.0-green?logo=deno"/>
+   </a>
+   <a href="https://nest.land/package/merlin">
+     <img src="https://nest.land/badge.svg" />
+   </a>
+</p>
 
 ## Merlin
 
@@ -46,6 +66,42 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `testLessOrEqual(label: string, config)` evaluates if the expected data is less than or equal to another
 - `testInstanceOf(label: string, config)` evaluates that one object is an instance of another
 - `testFloat(label: string, config)` evaluates if two decimal numbers are equal
+
+### Install Merlin
+
+install merlin-cli (optional)
+
+```sh
+$ deno install --allow-run -n merlin http://denopkg.com/crewdevio/merlin/cli.ts
+```
+
+or using [Trex](https://github.com/crewdevio/Trex) package manager.
+
+```sh
+$ trex getTool merlin-cli
+```
+
+### Mirrors
+
+you can get Merlin from different url.
+
+- from `deno.land/x`
+
+```typescript
+import { Merlin } from "https://deno.land/x/merlin/mod.ts";
+```
+
+- from `nest.land`
+
+```typescript
+import { Merlin } from "https://x.nest.land/merlin@1.0.0/mod.ts";
+```
+
+- from `github repo`
+
+```typescript
+import { Merlin } from "http://denopkg.com/crewdevio/merlin/mod.ts";
+```
 
 ### Basic Use
 
@@ -297,6 +353,8 @@ test.testEqual("get error 404", {
 
 > **Note**: all the methods of the merlin class support asyn function since they have top level await
 
+![merlin gif](https://cdn.discordapp.com/attachments/656976424778989602/735287285519745114/mer.gif)
+
 ## Create benchmarks using Maven
 
 Maven is a benchmark tool for deno included in Merlin.
@@ -321,7 +379,7 @@ benchmark.runBench();
 
 this is the terminal output
 
-![gif](https://cdn.discordapp.com/attachments/656976424778989602/735278025742221324/ezgif.com-video-to-gif.gif)
+![gif](https://cdn.discordapp.com/attachments/656976424778989602/735290326645735464/ezgif-7-c060645377b2.gif)
 
 ### Parameters
 

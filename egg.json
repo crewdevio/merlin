@@ -1,0 +1,18 @@
+{
+  "name": "merlin",
+  "description": "Testing and Benchmarking framework for deno 🧙‍♂️",
+  "version": "1.0.0",
+  "entry": "./mod.ts",
+  "stable": true,
+  "unlisted": false,
+  "fmt": false,
+  "repository": "https://github.com/crewdevio/merlin",
+  "files": [
+    "./cli.ts",
+    "./src/**/*",
+    "./README.md",
+    "./mod.ts",
+    "./deps.ts",
+    "./LINCESE"
+  ]
+}
