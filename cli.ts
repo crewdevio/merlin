@@ -20,11 +20,21 @@ async function main() {
       Deno.close(process.rid);
     } else {
       Deno.close(process.rid);
-      throw new Error(colors.red("something went wrong trying to run the test"))
+      throw new Error(colors.red("something went wrong running the test"))
         .message;
     }
   } else if (command === "help") {
-    console.log("help info...");
+    const info = [
+      colors.green("merlin test runner v1.0.0 🧪\n"),
+      colors.green("usage:"),
+      `merlin ${colors.yellow("test")} ...allow-flags\n`,
+      colors.green("example:"),
+      `merlin ${colors.yellow("test")} --allow-net\n`,
+    ];
+
+    for (const log of info) {
+      console.log(log);
+    }
   } else {
     throw new Error(
       colors.red("this command was not found, try run: merlin help")
