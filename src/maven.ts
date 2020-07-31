@@ -9,23 +9,13 @@
 import {
   bench,
   runBenchmarks,
-  BenchmarkResult,
   BenchmarkRunOptions,
   prettyBenchmarkProgress,
   prettyBenchmarkResult,
   colors,
 } from "../deps.ts";
-interface Bench {
-  name: string;
-  steps?: number;
-  fn: Function;
-}
 
-interface Thresholds {
-  [key: string]: { green: number; yellow: number };
-}
-
-export type BenchResult = BenchmarkResult;
+import { Thresholds, Bench } from "./types.ts";
 
 export class Maven {
   private bench = bench;
