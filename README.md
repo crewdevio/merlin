@@ -66,6 +66,8 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `testLessOrEqual(label: string, config)` evaluates if the expected data is less than or equal to another
 - `testInstanceOf(label: string, config)` evaluates that one object is an instance of another
 - `testFloat(label: string, config)` evaluates if two decimal numbers are equal
+- `testThrows(label: string, config)` expect it throws an error
+- `testThrowsSync(label: string, config)` expect it throws an async error
 
 ### Install Merlin
 
@@ -431,3 +433,9 @@ It has a table with the detailed values
 └───────────────────────────────┴───────────────────────────────────────────────────────────┘
 
 ```
+
+### Contributing
+
+contributions are welcome, create a pull request and send us your feature, first check the [CONTRIBUTING GUIDELINES](CONTRIBUTING.md).
+
+### [LICENSE MIT](https://opensource.org/licenses/MIT)

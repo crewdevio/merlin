@@ -13,6 +13,6 @@
     "./README.md",
     "./mod.ts",
     "./deps.ts",
-    "./LINCESE"
+    "./LICENSE"
   ]
 }
