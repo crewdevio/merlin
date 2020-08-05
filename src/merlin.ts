@@ -14,6 +14,8 @@ import {
   assertArrayContains,
   assertStringContains,
   assertMatch,
+  assertThrows,
+  assertThrowsAsync,
 } from "../deps.ts";
 
 import {
@@ -25,6 +27,7 @@ import {
   Tests,
   testConfig,
   Length,
+  throws,
 } from "./types.ts";
 
 /**
@@ -618,6 +621,9 @@ export class Merlin {
     });
   }
 
+  /**
+   * expect both float values ​​to be equal.
+   */
   public testFloat(
     label: string,
     {
@@ -643,6 +649,56 @@ export class Merlin {
       ignore,
       only,
       sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect it throws an error.
+   */
+  public testThrows(
+    label: string,
+    { throws, ErrorClass, Ops, Resources, ignore, message, only }: throws
+  ) {
+    this.Test({
+      name: label,
+      fn: () => {
+        assertThrows(
+          () => {
+            throws();
+          },
+          ErrorClass,
+          message
+        );
+      },
+      sanitizeOps: Ops,
+      ignore,
+      only,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect it throws an async error
+   */
+  public testThrowsSync(
+    label: string,
+    { throws, ErrorClass, Ops, Resources, ignore, message, only }: throws
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        await assertThrowsAsync(
+          async () => {
+            throws();
+          },
+          ErrorClass,
+          message
+        );
+      },
+      sanitizeOps: Ops,
+      ignore,
+      only,
       sanitizeResources: Resources,
     });
   }

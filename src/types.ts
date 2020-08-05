@@ -1,3 +1,5 @@
+import { BenchmarkResult } from "../deps.ts";
+
 export interface testConfig {
   ignore?: boolean;
   expect(): Promise<any> | any;
@@ -72,5 +74,27 @@ export interface Length {
   Resources?: boolean;
   only?: boolean;
 }
+
+export interface throws {
+  throws(): void;
+  ignore?: boolean;
+  message?: string;
+  Ops?: boolean;
+  Resources?: boolean;
+  only?: boolean;
+  ErrorClass?: any;
+}
+
+export interface Bench {
+  name: string;
+  steps?: number;
+  fn: Function;
+}
+
+export interface Thresholds {
+  [key: string]: { green: number; yellow: number };
+}
+
+export type BenchResult = BenchmarkResult;
 
 export type Tests = Array<Test>;
