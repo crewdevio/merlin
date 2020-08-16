@@ -6,7 +6,7 @@
  *
  */
 
-import { colors } from "./deps.ts";
+import { colors } from "./imports/fmt.ts";
 
 async function main() {
   const [command, ...args] = Deno.args;
@@ -25,7 +25,7 @@ async function main() {
     }
   } else if (command === "help") {
     const info = [
-      colors.green("merlin test runner v1.0.0 🧪\n"),
+      colors.green("merlin test runner v1.0.2 🧪\n"),
       colors.green("usage:"),
       `merlin ${colors.yellow("test")} ...allow-flags\n`,
       colors.green("example:"),

@@ -6,17 +6,7 @@
  *
  */
 
-import {
-  assert,
-  assertEquals,
-  assertStrictEquals,
-  assertNotEquals,
-  assertArrayContains,
-  assertStringContains,
-  assertMatch,
-  assertThrows,
-  assertThrowsAsync,
-} from "../deps.ts";
+import { asserts } from "../imports/testing.ts";
 
 import {
   ArrayContains,
@@ -29,6 +19,7 @@ import {
   Length,
   throws,
 } from "./types.ts";
+import { colors } from "../imports/fmt.ts";
 
 /**
  * testing framework for deno inspire in jest 🧙‍♂️
@@ -57,9 +48,9 @@ export class Merlin {
       name: label,
       fn: async () => {
         if (strict) {
-          assertStrictEquals(await expect(), await toBe(), message);
+          asserts.assertStrictEquals(await expect(), await toBe(), message);
         } else {
-          assertEquals(await expect(), await toBe(), message);
+          asserts.assertEquals(await expect(), await toBe(), message);
         }
       },
       ignore,
@@ -88,7 +79,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assertNotEquals(await expect(), await notBe(), message);
+        asserts.assertNotEquals(await expect(), await notBe(), message);
       },
       ignore,
       only: only,
@@ -117,9 +108,9 @@ export class Merlin {
         name: label,
         fn: async () => {
           if (strict) {
-            assertStrictEquals(await expect(), await toBe(), message);
+            asserts.assertStrictEquals(await expect(), await toBe(), message);
           } else {
-            assertEquals(await expect(), await toBe(), message);
+            asserts.assertEquals(await expect(), await toBe(), message);
           }
         },
         ignore,
@@ -158,7 +149,7 @@ export class Merlin {
         } else {
           data = await response.json();
         }
-        assertEquals(await data, await toBe(), message);
+        asserts.assertEquals(await data, await toBe(), message);
       },
       ignore,
       only,
@@ -187,7 +178,7 @@ export class Merlin {
       name: label,
       ignore: ignore,
       fn: async () => {
-        assertArrayContains(await value(), await Contains(), message);
+        asserts.assertArrayContains(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,
@@ -215,7 +206,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assertStringContains(await value(), await Contains(), message);
+        asserts.assertStringContains(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,
@@ -235,7 +226,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assertEquals(await value(), null, message);
+        asserts.assertEquals(await value(), null, message);
       },
       only,
       sanitizeOps: Ops,
@@ -255,7 +246,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert(!(await value()), message);
+        asserts.assert(!(await value()), message);
       },
       only,
       sanitizeOps: Ops,
@@ -275,7 +266,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert((await value()) && true, message);
+        asserts.assert((await value()) && true, message);
       },
       only,
       sanitizeOps: Ops,
@@ -295,7 +286,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert(typeof (await value()) === "bigint", message);
+        asserts.assert(typeof (await value()) === "bigint", message);
       },
       only,
       sanitizeOps: Ops,
@@ -315,7 +306,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert((await value()) - 0 === 0, message);
+        asserts.assert((await value()) - 0 === 0, message);
       },
       only,
       sanitizeOps: Ops,
@@ -335,7 +326,7 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert(isNaN(await value()), message);
+        asserts.assert(isNaN(await value()), message);
       },
       only,
       sanitizeOps: Ops,
@@ -363,7 +354,10 @@ export class Merlin {
       name: label,
       ignore,
       fn: async () => {
-        assert((await expect()).length === (await toBe()).length, message);
+        asserts.assert(
+          (await expect()).length === (await toBe()).length,
+          message
+        );
       },
       only,
       sanitizeOps: Ops,
@@ -390,7 +384,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assertMatch(await expect(), await toBe(), message);
+        asserts.assertMatch(await expect(), await toBe(), message);
       },
       ignore,
       only,
@@ -410,7 +404,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert(typeof (await value()) === "function", message);
+        asserts.assert(typeof (await value()) === "function", message);
       },
       ignore,
       only,
@@ -430,7 +424,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert(typeof (await value()) === "symbol", message);
+        asserts.assert(typeof (await value()) === "symbol", message);
       },
       ignore,
       only,
@@ -450,7 +444,92 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert(typeof (await value()) === "undefined", message);
+        asserts.assert(typeof (await value()) === "undefined", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a data is string
+   *
+   */
+  public isString(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        asserts.assert(typeof (await value()) === "string", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a data is number
+   *
+   */
+  public isNumber(
+    label: string,
+    { value, Ops = true, Resources = true, ignore, message, only }: Config
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        asserts.assert(typeof (await value()) === "number", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * expect an object to contain the properties in its value
+   */
+  public haveProperty(
+    label: string,
+    {
+      Contains,
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+    }: any
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        const _Contains = Object.keys(await Contains());
+        const _value = Object.keys(await value());
+
+        const errorTrace: string[] = [];
+        for (const keys of _value) {
+          if (!_Contains.includes(keys)) {
+            errorTrace.push(
+              colors.green(
+                `\n\ndoes not have the property: ${colors.red(keys)}\n`
+              )
+            );
+          }
+        }
+
+        if (errorTrace.length) {
+          Merlin.Error(errorTrace.join(""));
+        }
+
+        asserts.assert(true, message);
       },
       ignore,
       only,
@@ -477,7 +556,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assertStrictEquals(await expect(), await toBe(), message);
+        asserts.assertStrictEquals(await expect(), await toBe(), message);
       },
       ignore,
       only,
@@ -504,7 +583,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert((await expect()) >= (await toBe()), message);
+        asserts.assert((await expect()) >= (await toBe()), message);
       },
       ignore,
       only,
@@ -531,7 +610,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert((await expect()) > (await toBe()), message);
+        asserts.assert((await expect()) > (await toBe()), message);
       },
       ignore,
       only,
@@ -558,7 +637,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert((await expect()) < (await toBe()), message);
+        asserts.assert((await expect()) < (await toBe()), message);
       },
       ignore,
       only,
@@ -585,7 +664,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert((await expect()) <= (await toBe()), message);
+        asserts.assert((await expect()) <= (await toBe()), message);
       },
       ignore,
       only,
@@ -612,7 +691,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        assert((await expect()) instanceof (await toBe()), message);
+        asserts.assert((await expect()) instanceof (await toBe()), message);
       },
       ignore,
       only,
@@ -641,9 +720,9 @@ export class Merlin {
       name: label,
       fn: async () => {
         if (strict) {
-          assertStrictEquals(await expect(), await toBe(), message);
+          asserts.assertStrictEquals(await expect(), await toBe(), message);
         } else {
-          assertEquals(await expect(), await toBe(), message);
+          asserts.assertEquals(await expect(), await toBe(), message);
         }
       },
       ignore,
@@ -663,7 +742,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: () => {
-        assertThrows(
+        asserts.assertThrows(
           () => {
             throws();
           },
@@ -688,7 +767,7 @@ export class Merlin {
     this.Test({
       name: label,
       fn: async () => {
-        await assertThrowsAsync(
+        await asserts.assertThrowsAsync(
           async () => {
             throws();
           },
@@ -701,5 +780,26 @@ export class Merlin {
       only,
       sanitizeResources: Resources,
     });
+  }
+
+  /**
+   * force to throw an error
+   */
+  public static Error(msg?: string) {
+    return asserts.fail(msg);
+  }
+
+  /**
+   * Use this to throw a method not implemented error
+   */
+  public static Unimplemented(msg?: string) {
+    return asserts.unimplemented(msg);
+  }
+
+  /**
+   * Use this to throw an Unreachable  method error.
+   */
+  public static Unreachable() {
+    return asserts.unreachable();
   }
 }
