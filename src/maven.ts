@@ -7,32 +7,29 @@
  */
 
 import {
-  bench,
-  runBenchmarks,
-  BenchmarkRunOptions,
   prettyBenchmarkProgress,
   prettyBenchmarkResult,
-  colors,
-} from "../deps.ts";
-
+} from "../imports/pretty_benching.ts";
+import { colors } from "../imports/fmt.ts";
+import { bench } from "../imports/testing.ts";
 import { Thresholds, Bench } from "./types.ts";
 
 export class Maven {
-  private bench = bench;
+  private bench = bench.bench;
 
   private thresholds: Thresholds = {};
 
-  private config: BenchmarkRunOptions = {};
+  private config: bench.BenchmarkRunOptions = {};
 
   private indicators = [
     {
       benches: /./,
       tableColor: colors.cyan,
-      modFn: () => "🧪",
+      modFn: () => "🚀",
     },
   ];
 
-  private runIndicator = [{ benches: /./, modFn: () => colors.green(" ==> ") }];
+  private runIndicator = [{ benches: /./, modFn: () => "==> " }];
 
   private addThreasholds(name: string) {
     this.thresholds[name] = { green: 70, yellow: 90 };
@@ -51,9 +48,9 @@ export class Maven {
     });
   }
 
-  public async runBench(config?: BenchmarkRunOptions) {
-    this.config = config as BenchmarkRunOptions;
-    return runBenchmarks(
+  public async runBench(config?: bench.BenchmarkRunOptions) {
+    this.config = config as bench.BenchmarkRunOptions;
+    return bench.runBenchmarks(
       { silent: true, ...config },
       prettyBenchmarkProgress({
         indicators: this.runIndicator,

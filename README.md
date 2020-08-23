@@ -21,6 +21,9 @@
    <a href="https://nest.land/package/merlin">
      <img src="https://nest.land/badge.svg" />
    </a>
+   <a href="https://deno.land/x/merlin">
+    <img src="https://img.shields.io/badge/available%20on-deno.land/x-blue.svg?style=flat&logo=deno"/>
+   </a>
 </p>
 
 ## Merlin
@@ -59,6 +62,8 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `isFunction(label: string, config)` evaluates if a data is a function
 - `isSymbol(label: string, config)` evaluates if a data is a symbol
 - `isUndefined(label: string, config)` evaluates if a data is undefined
+- `isString(label: string, config)` evaluates if a data is string
+- `isNumber(label: string, config)` evaluates if a data is number
 - `testSame(label: string, config)` evaluates if two values are strictly the same
 - `testGreaterOrEqual(label: string, config)` evaluates whether the expected data is greater than or equal to another
 - `testGreater(label: string, config)` evaluates whether the expected data is greater than another
@@ -68,19 +73,20 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `testFloat(label: string, config)` evaluates if two decimal numbers are equal
 - `testThrows(label: string, config)` expect it throws an error
 - `testThrowsSync(label: string, config)` expect it throws an async error
+- `haveProperty(label: string, config)` expect an object to contain the properties in its value
+
+#### Statics
+
+- `Merlin.Error(msg?: string)` force to throw an error
+- `Merlin.Unimplemented(msg?: string)` Use this to throw a method not implemented error
+- `Merlin.Unreachable()` Use this to throw an Unreachable method error
 
 ### Install Merlin
 
 install merlin-cli (optional)
 
 ```sh
-$ deno install --allow-run -n merlin http://denopkg.com/crewdevio/merlin/cli.ts
-```
-
-or using [Trex](https://github.com/crewdevio/Trex) package manager.
-
-```sh
-$ trex getTool merlin-cli
+deno install --allow-run -n merlin https://deno.land/x/merlin/cli.ts
 ```
 
 ### Mirrors
@@ -126,10 +132,16 @@ test.testEqual("two plus two is four", {
 });
 ```
 
-run this test in deno
+run this test in deno.
 
 ```sh
-$ deno test
+merlin start
+```
+
+or
+
+```sh
+deno test
 ```
 
 you should see this output on the console.
@@ -184,7 +196,7 @@ test.testEqual("Leak resources test", {
 ```
 
 ```sh
-deno test
+merlin start
 
 test Leak resources test ... ok (5ms)
 
@@ -224,7 +236,7 @@ test.evalEquals([
 output
 
 ```sh
-$ deno test
+merlin start
 
 running 2 tests
 test object assignment ... ok (10ms)
@@ -251,7 +263,7 @@ test.testNotEqual("two plus two not is five", {
 output
 
 ```sh
-$ deno test
+merlin start
 
 running 1 tests
 test two plus two not is five ... FAILED (2ms)
@@ -286,7 +298,7 @@ test.stringContains("hello world contains orld", {
 ```
 
 ```sh
-deno test
+merlin start
 
 test hello world contains orld ... ok (8ms)
 
@@ -306,7 +318,7 @@ test.fetchEqual("fetch data", {
 ```
 
 ```sh
-deno test
+merlin start
 
 test fetch data ... ok (1440ms)
 
@@ -323,7 +335,7 @@ test.testRegExp("regEx match", {
 ```
 
 ```sh
-deno test
+merlin start
 
 test regEx match ... ok (6ms)
 
@@ -415,7 +427,7 @@ It has a table with the detailed values
 ▒▒▒▒▒▒▒▒ Benchmarking finished
 
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
-│ 🧪 Benchmark name:  Sorting arrays                                                        │
+│ 🚀 Benchmark name:  Sorting arrays                                                        │
 ├───────────────────────┬──────────────────────────────┬────────────────────────────────────┤
 │    Total runs: 1000   │  Total time: 1099.6591 ms    │  Avg time: 1.0997 ms               │
 ├───────────────────────┼────────────────────┬─────────┴───────────┬────────────────────────┤

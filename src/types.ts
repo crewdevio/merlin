@@ -1,4 +1,4 @@
-import { BenchmarkResult } from "../deps.ts";
+import { bench } from "../imports/testing.ts";
 
 export interface testConfig {
   ignore?: boolean;
@@ -95,6 +95,6 @@ export interface Thresholds {
   [key: string]: { green: number; yellow: number };
 }
 
-export type BenchResult = BenchmarkResult;
+export type BenchResult = bench.BenchmarkResult;
 
 export type Tests = Array<Test>;
