@@ -1,7 +1,7 @@
 {
   "name": "merlin",
   "description": "Testing and Benchmarking framework for deno 🧙‍♂️",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "entry": "./mod.ts",
   "stable": true,
   "unlisted": false,

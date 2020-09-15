@@ -1,4 +1,4 @@
-import { bench } from "../imports/testing.ts";
+import type { bench } from "../imports/testing.ts";
 
 export interface testConfig {
   ignore?: boolean;

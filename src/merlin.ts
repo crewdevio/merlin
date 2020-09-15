@@ -8,7 +8,7 @@
 
 import { asserts } from "../imports/testing.ts";
 
-import {
+import type {
   ArrayContains,
   Config,
   Fetch_equal,

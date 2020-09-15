@@ -12,7 +12,7 @@ import {
 } from "../imports/pretty_benching.ts";
 import { colors } from "../imports/fmt.ts";
 import { bench } from "../imports/testing.ts";
-import { Thresholds, Bench } from "./types.ts";
+import type { Thresholds, Bench } from "./types.ts";
 
 export class Maven {
   private bench = bench.bench;
