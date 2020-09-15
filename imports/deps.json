@@ -1,7 +1,16 @@
 {
   "meta": {
-    "fmt": "https://denopkg.com/crewdevio/Trex@proxy/proxy/files/fmt.ts",
-    "testing": "https://denopkg.com/crewdevio/Trex@proxy/proxy/files/testing.ts",
-    "pretty_benching": "https://deno.land/x/pretty_benching/mod.ts"
+    "fmt": {
+      "url": "https://denopkg.com/crewdevio/Trex@proxy/proxy/files/fmt.ts",
+      "hash": "5b4388adfdc1f5ad8a727f95a91c3f255cb36f430b6b4503f8f3ddacc162db53"
+    },
+    "testing": {
+      "url": "https://denopkg.com/crewdevio/Trex@proxy/proxy/files/testing.ts",
+      "hash": "eda35f0a9575fe5d7b91a6be8eaf497d098c1273a5fc87dc3ce2390ec55af78e"
+    },
+    "pretty_benching": {
+      "url": "https://deno.land/x/pretty_benching@v0.2.4/mod.ts",
+      "hash": "3d19cceffabca677358769d5487d4ae576cf4cf76c7cccb1b354ac03e625ece7"
+    }
   }
 }

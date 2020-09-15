@@ -1,1 +1,1 @@
-export * from "https://deno.land/x/pretty_benching/mod.ts";
+export * from "https://deno.land/x/pretty_benching@v0.2.4/mod.ts";
