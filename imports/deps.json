@@ -9,8 +9,8 @@
       "hash": "eda35f0a9575fe5d7b91a6be8eaf497d098c1273a5fc87dc3ce2390ec55af78e"
     },
     "pretty_benching": {
-      "url": "https://deno.land/x/pretty_benching@v0.2.4/mod.ts",
-      "hash": "3d19cceffabca677358769d5487d4ae576cf4cf76c7cccb1b354ac03e625ece7"
+      "url": "https://deno.land/x/pretty_benching@v0.3.0/mod.ts",
+      "hash": "0e6a7e6ffeb7da6facfb4faa17da9556f21aeeef14486fead85461fd065c1f6c"
     }
   }
 }
