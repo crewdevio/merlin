@@ -9,6 +9,7 @@
 import {
   prettyBenchmarkProgress,
   prettyBenchmarkResult,
+  prettyBenchmarkDown,
 } from "../imports/pretty_benching.ts";
 import { colors } from "../imports/fmt.ts";
 import { bench } from "../imports/testing.ts";
@@ -31,12 +32,12 @@ export class Maven {
 
   private runIndicator = [{ benches: /./, modFn: () => "==> " }];
 
-  private addThreasholds(name: string) {
+  private addThresholds(name: string) {
     this.thresholds[name] = { green: 70, yellow: 90 };
   }
 
   public Bench({ fn, name, steps = 1 }: Bench) {
-    this.addThreasholds(name);
+    this.addThresholds(name);
     this.bench({
       name,
       func(bench) {
@@ -74,5 +75,39 @@ export class Maven {
         graphBars,
       },
     });
+  }
+
+  public static Emit(config: {
+    fileName?: string;
+    title?: string;
+    description?: string;
+    json?: boolean;
+  }) {
+    const _fileName = `/${
+      config.fileName ? config.fileName : "out_put"
+    }-${new Date().getTime()}`;
+
+    return prettyBenchmarkDown(
+      (markdown: string) => {
+        const create = Deno.createSync(`${Deno.cwd()}${_fileName}.md`);
+        Deno.writeTextFileSync(`.${_fileName}.md`, markdown);
+        create.close();
+      },
+      {
+        title: config.title ? config.title : "Maven Benchmark output",
+        description: config.description ? config.description : "",
+        afterTables: (result: any) => {
+          if (config.json) {
+            const create = Deno.createSync(`${Deno.cwd()}${_fileName}.json`);
+            Deno.writeTextFileSync(
+              `.${_fileName}.json`,
+              JSON.stringify(result, null, 2)
+            );
+            create.close();
+          }
+          return "";
+        },
+      }
+    );
   }
 }
