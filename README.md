@@ -49,15 +49,15 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `testNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
 - `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the data is not the same it throws an error
 - `fetchEqual(label: string, config)` evaluate if two values are equal. If the request data is not the same as expected, it throws an error
-- `arrayContains(label: string, config)` evaluates that the array contains an especific data. if the array does not contain the data it throws an error
-- `stringContains(label: string, config)` evaluates if a string contains an especific word. if the string does not contain the word it throws an error
+- `arrayContains(label: string, config)` evaluates that the array contains an specific data. if the array does not contain the data it throws an error
+- `stringContains(label: string, config)` evaluates if a string contains an specific word. if the string does not contain the word it throws an error
 - `beNull(label: string, config)` evaluates if a data is null
 - `beFalsy(label: string, config)` evaluates if a data is a falsy value
 - `beTruthy(label: string, config)` evaluates if a data is a truthy value
 - `isBigInt(label: string, config)` evaluates if a data is a bigInt value type
 - `isZero(label: string, config)` evaluates if a data is a Zero
 - `isNaN(label: string, config)` evaluates if a data is NaN value
-- `sameLength(label: string, config)` evaluates if data has a especific length
+- `sameLength(label: string, config)` evaluates if data has a specific length
 - `testRegExp(label: string, config)` evaluates if a regular expression match
 - `isFunction(label: string, config)` evaluates if a data is a function
 - `isSymbol(label: string, config)` evaluates if a data is a symbol
@@ -291,8 +291,8 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (
 `example.test.ts`
 
 ```typescript
-test.stringContains("hello world contains orld", {
-  Contains: () => "orld",
+test.stringContains("hello world contains world", {
+  Contains: () => "world",
   value: () => "Hello World",
 });
 ```
@@ -300,7 +300,7 @@ test.stringContains("hello world contains orld", {
 ```sh
 merlin start
 
-test hello world contains orld ... ok (8ms)
+test hello world contains world ... ok (8ms)
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
@@ -342,7 +342,7 @@ test regEx match ... ok (6ms)
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (342ms)
 ```
 
-### Usin async code.
+### Using async code.
 
 you can use asynchronous code by adding `async` in `expect`, `toBe` and `value` functions.
 
@@ -365,7 +365,7 @@ test.testEqual("get error 404", {
 });
 ```
 
-> **Note**: all the methods of the merlin class support asyn function since they have top level await
+> **Note**: all the methods of the merlin class support async function since they have top level await
 
 ![merlin gif](https://cdn.discordapp.com/attachments/656976424778989602/735287285519745114/mer.gif)
 
@@ -424,10 +424,11 @@ benchmark.runBench().then(benchmark.Result());
 It has a table with the detailed values
 
 ```sh
+
 ▒▒▒▒▒▒▒▒ Benchmarking finished
 
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
-│ 🚀 Benchmark name:  Sorting arrays                                                        │
+│    Benchmark name:  Sorting array                                                         │
 ├───────────────────────┬──────────────────────────────┬────────────────────────────────────┤
 │    Total runs: 1000   │  Total time: 1099.6591 ms    │  Avg time: 1.0997 ms               │
 ├───────────────────────┼────────────────────┬─────────┴───────────┬────────────────────────┤
