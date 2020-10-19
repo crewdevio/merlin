@@ -137,12 +137,13 @@ export class Merlin {
       ignore,
       message,
       only,
+      config
     }: Fetch_equal
   ) {
     this.Test({
       name: label,
       fn: async () => {
-        const response = await fetch(url);
+        const response = await fetch(url, config);
         let data;
         if (type === "text") {
           data = await response.text();
