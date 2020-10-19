@@ -11,10 +11,13 @@ import {
   prettyBenchmarkResult,
   prettyBenchmarkDown,
 } from "../imports/pretty_benching.ts";
+import type { Thresholds, Bench, EmitConfig } from "./types.ts";
 import { colors } from "../imports/fmt.ts";
 import { bench } from "../imports/testing.ts";
-import type { Thresholds, Bench } from "./types.ts";
 
+/**
+ * create simple and scalable  benchmarks for typescript and javascript, running on deno
+ */
 export class Maven {
   private bench = bench.bench;
 
@@ -36,6 +39,9 @@ export class Maven {
     this.thresholds[name] = { green: 70, yellow: 90 };
   }
 
+  /**
+   * 
+   */
   public Bench({ fn, name, steps = 1 }: Bench) {
     this.addThresholds(name);
     this.bench({
@@ -49,6 +55,10 @@ export class Maven {
     });
   }
 
+  /**
+   * execute the benchmarks
+   * @param config
+   */
   public async runBench(config?: bench.BenchmarkRunOptions) {
     this.config = config as bench.BenchmarkRunOptions;
     return bench.runBenchmarks(
@@ -60,10 +70,10 @@ export class Maven {
     );
   }
 
-  public async success() {
-    return await this.runBench(this.config);
-  }
-
+  /**
+   * prints the results table at the end of the benchmarks
+   * @param graphBars
+   */
   public Result(graphBars = 5) {
     return prettyBenchmarkResult({
       thresholds: this.thresholds,
@@ -77,12 +87,11 @@ export class Maven {
     });
   }
 
-  public static Emit(config: {
-    fileName?: string;
-    title?: string;
-    description?: string;
-    json?: boolean;
-  }) {
+  /**
+   * create a markdown file with the results of the benchmarks, it can also be issued in json format
+   * @param config
+   */
+  public static Emit(config: EmitConfig) {
     const _fileName = `/${
       config.fileName ? config.fileName : "out_put"
     }-${new Date().getTime()}`;

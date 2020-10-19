@@ -26,6 +26,7 @@ export interface Config {
 
 export interface Fetch_equal {
   url: string;
+  config?: RequestInit;
   type: "text" | "json";
   toBe(): Promise<any> | any;
   message?: string;
@@ -93,6 +94,13 @@ export interface Bench {
 
 export interface Thresholds {
   [key: string]: { green: number; yellow: number };
+}
+
+export interface EmitConfig {
+  fileName?: string;
+  title?: string;
+  description?: string;
+  json?: boolean;
 }
 
 export type BenchResult = bench.BenchmarkResult;
