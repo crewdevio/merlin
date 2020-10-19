@@ -33,21 +33,21 @@ async function main() {
     const info = [
       colors.green(`merlin cli test runner ${VERSION} 🧪\n`),
 
-      colors.green("usage:"),
-      `merlin ${colors.yellow("[start or test]")} ...allow-flags\n`,
+      colors.green("\nusage:\n"),
+      `   merlin ${colors.yellow("[start or test]")} ...allow-flags\n`,
 
-      colors.green("example:"),
-      `merlin ${colors.yellow("start")} --allow-net --coverage\n`,
+      colors.green("\nexample:\n"),
+      `   merlin ${colors.yellow("start")} --allow-net --coverage\n`,
 
-      colors.green("commands:"),
+      colors.green("\ncommands:\n"),
       colors.yellow(
-        `--help, -h, help         ${colors.white("show help info\n")}`
+        `--help,    -h, help      ${colors.white("show help info\n")}`
       ),
       colors.yellow(
         `--version, -v, version   ${colors.white("show merlin cli version\n")}`
       ),
 
-      colors.green("testing flags:"),
+      colors.green("\ntesting flags:\n"),
       `${colors.yellow(" --coverage")}  ${colors.white(
         "show test coverage for your code"
       )}\n`,
@@ -57,11 +57,14 @@ async function main() {
       `${colors.yellow(" --failfast")}  ${colors.white(
         "If you have a long running test suite and wish for it to stop on the first failure"
       )}\n`,
+
+      colors.green(
+        `\nDirectory arguments are expanded to all contained files matching the glob\n${
+          colors.red("{*_,*.,}test.{js,mjs,ts,jsx,tsx}:")
+        }\n`)
     ];
 
-    for (const log of info) {
-      console.log(log);
-    }
+      console.log(info.join(""));
   } else if (["version", "--version", "-v"].includes(command)) {
     console.log(
       `${colors.green(
@@ -73,8 +76,6 @@ async function main() {
       colors.red("this command was not found, try run: merlin help")
     ).message;
   }
-
-  console.log();
 }
 
 if (import.meta.main) {
