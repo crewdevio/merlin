@@ -9,11 +9,11 @@
 import { asserts } from "../imports/testing.ts";
 
 import type {
-  ArrayContains,
+  ArrayIncludes,
   Config,
   Fetch_equal,
   NotEqual,
-  StringContains,
+  StringIncludes,
   Tests,
   testConfig,
   Length,
@@ -163,7 +163,7 @@ export class Merlin {
    * evaluates that the array contains the data.
    * if the array does not contain the data it throws an error.
    */
-  public arrayContains(
+  public arrayIncludes(
     label: string,
     {
       Contains,
@@ -173,13 +173,13 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
-    }: ArrayContains
+    }: ArrayIncludes
   ) {
     this.Test({
       name: label,
       ignore: ignore,
       fn: async () => {
-        asserts.assertArrayContains(await value(), await Contains(), message);
+        asserts.assertArrayIncludes(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,
@@ -191,7 +191,7 @@ export class Merlin {
    * evaluates that the string contains the data.
    *
    */
-  public stringContains(
+  public stringIncludes(
     label: string,
     {
       Contains,
@@ -201,13 +201,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: StringContains
+    }: StringIncludes
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
-        asserts.assertStringContains(await value(), await Contains(), message);
+        asserts.assertStringIncludes(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,

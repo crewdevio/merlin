@@ -36,7 +36,7 @@ export interface Fetch_equal {
   only?: boolean;
 }
 
-export interface ArrayContains {
+export interface ArrayIncludes {
   ignore?: boolean;
   value(): Promise<any[]> | any[];
   Contains(): Promise<any> | any;
@@ -46,7 +46,7 @@ export interface ArrayContains {
   only?: boolean;
 }
 
-export interface StringContains {
+export interface StringIncludes {
   ignore?: boolean;
   value(): Promise<string> | string;
   Contains(): Promise<string> | string;
