@@ -34,8 +34,8 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 
 ### Common Matchers
 
-- `testEqual(label: string, config)`
-- `testNotEqual(label: string, config)`
+- `assertEqual(label: string, config)`
+- `assertNotEqual(label: string, config)`
 - `evalEquals(testEqual[])`
 - `stringIncludes(label: string, config)`
 - `arrayIncludes(label: string, config)`
@@ -45,8 +45,8 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 
 ### All Matchers
 
-- `testEqual(label: string, config)` Compare two values and throws an error if the expect and toBe are not equal
-- `testNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
+- `assertEqual(label: string, config)` Compare two values and throws an error if the expect and toBe are not equal
+- `assertNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
 - `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the data is not the same it throws an error
 - `fetchEqual(label: string, config)` evaluate if two values are equal. If the request data is not the same as expected, it throws an error
 - `ArrayIncludes(label: string, config)` evaluates that the array contains an specific data. if the array does not contain the data it throws an error
@@ -58,21 +58,21 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `isZero(label: string, config)` evaluates if a data is a Zero
 - `isNaN(label: string, config)` evaluates if a data is NaN value
 - `sameLength(label: string, config)` evaluates if data has a specific length
-- `testRegExp(label: string, config)` evaluates if a regular expression match
+- `assertRegExp(label: string, config)` evaluates if a regular expression match
 - `isFunction(label: string, config)` evaluates if a data is a function
 - `isSymbol(label: string, config)` evaluates if a data is a symbol
 - `isUndefined(label: string, config)` evaluates if a data is undefined
 - `isString(label: string, config)` evaluates if a data is string
 - `isNumber(label: string, config)` evaluates if a data is number
-- `testSame(label: string, config)` evaluates if two values are strictly the same
-- `testGreaterOrEqual(label: string, config)` evaluates whether the expected data is greater than or equal to another
-- `testGreater(label: string, config)` evaluates whether the expected data is greater than another
-- `testLess(label: string, config)` evaluates if the expected data is less than another
-- `testLessOrEqual(label: string, config)` evaluates if the expected data is less than or equal to another
-- `testInstanceOf(label: string, config)` evaluates that one object is an instance of another
-- `testFloat(label: string, config)` evaluates if two decimal numbers are equal
-- `testThrows(label: string, config)` expect it throws an error
-- `testThrowsSync(label: string, config)` expect it throws an async error
+- `assertSame(label: string, config)` evaluates if two values are strictly the same
+- `assertGreaterOrEqual(label: string, config)` evaluates whether the expected data is greater than or equal to another
+- `assertGreater(label: string, config)` evaluates whether the expected data is greater than another
+- `assertLess(label: string, config)` evaluates if the expected data is less than another
+- `assertLessOrEqual(label: string, config)` evaluates if the expected data is less than or equal to another
+- `assertInstanceOf(label: string, config)` evaluates that one object is an instance of another
+- `assertFloat(label: string, config)` evaluates if two decimal numbers are equal
+- `assertThrows(label: string, config)` expect it throws an error
+- `assertThrowsSync(label: string, config)` expect it throws an async error
 - `haveProperty(label: string, config)` expect an object to contain the properties in its value
 
 #### Statics
@@ -122,7 +122,7 @@ import { Merlin } from "https://deno.land/x/merlin/mod.ts";
 
 const test = new Merlin();
 
-test.testEqual("two plus two is four", {
+test.assertEqual("two plus two is four", {
   expect() {
     return 2 + 2;
   },
@@ -186,7 +186,7 @@ async function writeSomething(): Promise<string> {
   return decoder.decode(Package);
 }
 
-test.testEqual("Leak resources test", {
+test.assertEqual("Leak resources test", {
   expect: async () => await writeSomething(),
   toBe: () => "test",
   only: true,
@@ -250,7 +250,7 @@ test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (13ms
 `example.test.ts`
 
 ```typescript
-test.testNotEqual("two plus two not is five", {
+test.assertNotEqual("two plus two not is five", {
   expect() {
     return 2 + 2;
   },
@@ -328,7 +328,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ### testRegExp
 
 ```typescript
-test.testRegExp("regEx match", {
+test.assertRegExp("regEx match", {
   expect: () => "https://google.com",
   toBe: () => new RegExp("^https?://[a-z.]+.com$"),
 });
@@ -351,7 +351,7 @@ example
 ```typescript
 const test = new Merlin();
 
-test.testEqual("get error 404", {
+test.assertEqual("get error 404", {
   async expect() {
     const response = await fetch("https://deno.land/std/example/examples.ts");
 

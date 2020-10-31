@@ -6,7 +6,7 @@
     },
     "testing": {
       "url": "https://denopkg.com/crewdevio/Trex@proxy/proxy/files/testing.ts",
-      "hash": "eda35f0a9575fe5d7b91a6be8eaf497d098c1273a5fc87dc3ce2390ec55af78e"
+      "hash": "96b3fe1112509332447d1029818dce5eb56d75c3207884dcbbfdb5d577e649a4"
     },
     "pretty_benching": {
       "url": "https://deno.land/x/pretty_benching@v0.3.0/mod.ts",

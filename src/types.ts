@@ -1,9 +1,9 @@
 import type { bench } from "../imports/testing.ts";
 
-export interface testConfig {
+export interface testConfig<T extends unknown | any> {
   ignore?: boolean;
-  expect(): Promise<any> | any;
-  toBe(): Promise<any> | any;
+  expect(): Promise<T> | T;
+  toBe(): Promise<T> | T;
   strict?: boolean;
   message?: string;
   Ops?: boolean;
@@ -11,13 +11,13 @@ export interface testConfig {
   only?: boolean;
 }
 
-export interface Test extends testConfig {
+export interface Test<T> extends testConfig<T> {
   label: string;
 }
 
-export interface Config {
+export interface Config<T extends unknown> {
   ignore?: boolean;
-  value(): Promise<any> | any;
+  value(): Promise<T> | T;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
@@ -36,10 +36,10 @@ export interface Fetch_equal {
   only?: boolean;
 }
 
-export interface ArrayIncludes {
+export interface ArrayContains<T extends unknown> {
   ignore?: boolean;
-  value(): Promise<any[]> | any[];
-  Contains(): Promise<any> | any;
+  value(): Promise<T[]> | T[];
+  Contains(): Promise<T[]> | T[];
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
@@ -68,8 +68,8 @@ export interface NotEqual {
 
 export interface Length {
   ignore?: boolean;
-  expect(): Promise<any[]> | any[];
-  toBe(): Promise<any[]> | any[];
+  expect(): Promise<ArrayLike<any>> | ArrayLike<any> | string | Promise<string>;
+  toBe(): Promise<ArrayLike<any>> | ArrayLike<any> | string | Promise<string>;
   message?: string;
   Ops?: boolean;
   Resources?: boolean;
@@ -77,7 +77,7 @@ export interface Length {
 }
 
 export interface throws {
-  throws(): void;
+  throws(): void | Promise<void>;
   ignore?: boolean;
   message?: string;
   Ops?: boolean;
@@ -105,4 +105,15 @@ export interface EmitConfig {
 
 export type BenchResult = bench.BenchmarkResult;
 
-export type Tests = Array<Test>;
+export type Tests<T> = Array<Test<T>>;
+
+export type BoolLike =
+  | string
+  | boolean
+  | Array<any>
+  | object
+  | null
+  | undefined
+  | number;
+
+export type ArrayLike<T> = Uint16Array | Uint32Array | Uint8Array | T[];
