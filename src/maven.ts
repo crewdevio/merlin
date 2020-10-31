@@ -9,11 +9,15 @@
 import {
   prettyBenchmarkProgress,
   prettyBenchmarkResult,
+  prettyBenchmarkDown,
 } from "../imports/pretty_benching.ts";
+import type { Thresholds, Bench, EmitConfig } from "./types.ts";
 import { colors } from "../imports/fmt.ts";
 import { bench } from "../imports/testing.ts";
-import type { Thresholds, Bench } from "./types.ts";
 
+/**
+ * create simple and scalable  benchmarks for typescript and javascript, running on deno
+ */
 export class Maven {
   private bench = bench.bench;
 
@@ -31,12 +35,15 @@ export class Maven {
 
   private runIndicator = [{ benches: /./, modFn: () => "==> " }];
 
-  private addThreasholds(name: string) {
+  private addThresholds(name: string) {
     this.thresholds[name] = { green: 70, yellow: 90 };
   }
 
+  /**
+   * 
+   */
   public Bench({ fn, name, steps = 1 }: Bench) {
-    this.addThreasholds(name);
+    this.addThresholds(name);
     this.bench({
       name,
       func(bench) {
@@ -48,6 +55,10 @@ export class Maven {
     });
   }
 
+  /**
+   * execute the benchmarks
+   * @param config
+   */
   public async runBench(config?: bench.BenchmarkRunOptions) {
     this.config = config as bench.BenchmarkRunOptions;
     return bench.runBenchmarks(
@@ -59,10 +70,10 @@ export class Maven {
     );
   }
 
-  public async success() {
-    return await this.runBench(this.config);
-  }
-
+  /**
+   * prints the results table at the end of the benchmarks
+   * @param graphBars
+   */
   public Result(graphBars = 5) {
     return prettyBenchmarkResult({
       thresholds: this.thresholds,
@@ -74,5 +85,38 @@ export class Maven {
         graphBars,
       },
     });
+  }
+
+  /**
+   * create a markdown file with the results of the benchmarks, it can also be issued in json format
+   * @param config
+   */
+  public static Emit(config: EmitConfig) {
+    const _fileName = `/${
+      config.fileName ? config.fileName : "out_put"
+    }-${new Date().getTime()}`;
+
+    return prettyBenchmarkDown(
+      (markdown: string) => {
+        const create = Deno.createSync(`${Deno.cwd()}${_fileName}.md`);
+        Deno.writeTextFileSync(`.${_fileName}.md`, markdown);
+        create.close();
+      },
+      {
+        title: config.title ? config.title : "Maven Benchmark output",
+        description: config.description ? config.description : "",
+        afterTables: (result: any) => {
+          if (config.json) {
+            const create = Deno.createSync(`${Deno.cwd()}${_fileName}.json`);
+            Deno.writeTextFileSync(
+              `.${_fileName}.json`,
+              JSON.stringify(result, null, 2)
+            );
+            create.close();
+          }
+          return "";
+        },
+      }
+    );
   }
 }

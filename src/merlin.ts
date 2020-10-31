@@ -13,11 +13,12 @@ import type {
   Config,
   Fetch_equal,
   NotEqual,
-  StringContains,
+  StringIncludes,
   Tests,
   testConfig,
   Length,
   throws,
+  BoolLike,
 } from "./types.ts";
 import { colors } from "../imports/fmt.ts";
 
@@ -31,7 +32,7 @@ export class Merlin {
    * evaluate if two values ​​are equal.
    * if the data is not the same it throws an error.
    */
-  public testEqual(
+  public assertEqual<T>(
     label: string,
     {
       expect,
@@ -42,7 +43,7 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -64,7 +65,7 @@ export class Merlin {
    * evaluate if two values ​​are not equal.
    * if they are not different throw an error.
    */
-  public testNotEqual(
+  public assertNotEqual(
     label: string,
     {
       expect,
@@ -92,7 +93,7 @@ export class Merlin {
    * evaluate multiple equality tests.
    * if the data is not the same it throws an error.
    */
-  public evalEquals(tests: Tests) {
+  public evalEquals<T>(tests: Tests<T>) {
     for (const {
       expect,
       label,
@@ -137,12 +138,13 @@ export class Merlin {
       ignore,
       message,
       only,
+      config,
     }: Fetch_equal
   ) {
     this.Test({
       name: label,
       fn: async () => {
-        const response = await fetch(url);
+        const response = await fetch(url, config);
         let data;
         if (type === "text") {
           data = await response.text();
@@ -162,7 +164,7 @@ export class Merlin {
    * evaluates that the array contains the data.
    * if the array does not contain the data it throws an error.
    */
-  public arrayContains(
+  public arrayContains<T>(
     label: string,
     {
       Contains,
@@ -172,13 +174,13 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
-    }: ArrayContains
+    }: ArrayContains<T>
   ) {
     this.Test({
       name: label,
       ignore: ignore,
       fn: async () => {
-        asserts.assertArrayContains(await value(), await Contains(), message);
+        asserts.assertArrayIncludes(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,
@@ -190,7 +192,7 @@ export class Merlin {
    * evaluates that the string contains the data.
    *
    */
-  public stringContains(
+  public stringIncludes(
     label: string,
     {
       Contains,
@@ -200,13 +202,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: StringContains
+    }: StringIncludes
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
-        asserts.assertStringContains(await value(), await Contains(), message);
+        asserts.assertStringIncludes(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,
@@ -218,9 +220,9 @@ export class Merlin {
    * evaluates if a data is null.
    *
    */
-  public beNull(
+  public beNull<T extends null>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config
+    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -238,9 +240,9 @@ export class Merlin {
    * evaluates if a data is a falsy value.
    *
    */
-  public beFalsy(
+  public beFalsy<T extends BoolLike>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config
+    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -258,9 +260,9 @@ export class Merlin {
    * evaluates if a data is a truthy value.
    *
    */
-  public beTruthy(
+  public beTruthy<T extends BoolLike>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config
+    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -278,9 +280,9 @@ export class Merlin {
    * evaluates if a data is a bigInt value.
    *
    */
-  public isBigInt(
+  public isBigInt<T extends BigInt>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config
+    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -298,9 +300,9 @@ export class Merlin {
    * evaluates if a data is zero.
    *
    */
-  public isZero(
+  public isZero<T extends number>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config
+    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -318,9 +320,9 @@ export class Merlin {
    * evaluates if a data is NaN value.
    *
    */
-  public isNaN(
+  public isNaN<T extends number>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config
+    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -369,7 +371,7 @@ export class Merlin {
    * evaluates if a regular expression match
    *
    */
-  public testRegExp(
+  public assertRegExp(
     label: string,
     {
       expect,
@@ -379,7 +381,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<any>
   ) {
     this.Test({
       name: label,
@@ -397,9 +399,9 @@ export class Merlin {
    * evaluates if a data is a function
    *
    */
-  public isFunction(
+  public isFunction<T extends Function>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config
+    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -417,9 +419,9 @@ export class Merlin {
    * evaluates if a data is a symbol
    *
    */
-  public isSymbol(
+  public isSymbol<T extends Symbol>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config
+    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -437,9 +439,9 @@ export class Merlin {
    * evaluates if a data is undefined
    *
    */
-  public isUndefined(
+  public isUndefined<T extends undefined>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config
+    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -457,9 +459,9 @@ export class Merlin {
    * evaluates if a data is string
    *
    */
-  public isString(
+  public isString<T extends string>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config
+    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -477,9 +479,9 @@ export class Merlin {
    * evaluates if a data is number
    *
    */
-  public isNumber(
+  public isNumber<T extends number>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config
+    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
   ) {
     this.Test({
       name: label,
@@ -541,7 +543,7 @@ export class Merlin {
   /**
    * expect the two values ​​to be strictly equal
    */
-  public testSame(
+  public assertSame<T extends any>(
     label: string,
     {
       expect,
@@ -551,7 +553,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -568,7 +570,7 @@ export class Merlin {
   /**
    * expect the expected value to be greater than or equal
    */
-  public testGreaterOrEqual(
+  public assertGreaterOrEqual<T extends number>(
     label: string,
     {
       expect,
@@ -578,7 +580,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -595,7 +597,7 @@ export class Merlin {
   /**
    * expect the expected value to be greater
    */
-  public testGreater(
+  public assertGreater<T extends number>(
     label: string,
     {
       expect,
@@ -605,7 +607,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -622,7 +624,7 @@ export class Merlin {
   /**
    * expect the expected value to be less.
    */
-  public testLess(
+  public assertLess<T extends number>(
     label: string,
     {
       expect,
@@ -632,7 +634,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -649,7 +651,7 @@ export class Merlin {
   /**
    * expect the expected value to be less or equal.
    */
-  public testLessOrEqual(
+  public assertLessOrEqual<T extends number>(
     label: string,
     {
       expect,
@@ -659,7 +661,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -676,7 +678,7 @@ export class Merlin {
   /**
    * expect both values ​​to be instances of the same class
    */
-  public testInstanceOf(
+  public assertInstanceOf<T extends Function>(
     label: string,
     {
       expect,
@@ -686,7 +688,7 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -703,7 +705,7 @@ export class Merlin {
   /**
    * expect both float values ​​to be equal.
    */
-  public testFloat(
+  public assertFloat<T extends number>(
     label: string,
     {
       expect,
@@ -714,7 +716,7 @@ export class Merlin {
       message,
       only,
       strict,
-    }: testConfig
+    }: testConfig<T>
   ) {
     this.Test({
       name: label,
@@ -735,7 +737,7 @@ export class Merlin {
   /**
    * expect it throws an error.
    */
-  public testThrows(
+  public assertThrows(
     label: string,
     { throws, ErrorClass, Ops, Resources, ignore, message, only }: throws
   ) {
@@ -760,7 +762,7 @@ export class Merlin {
   /**
    * expect it throws an async error
    */
-  public testThrowsSync(
+  public assertThrowsSync(
     label: string,
     { throws, ErrorClass, Ops, Resources, ignore, message, only }: throws
   ) {
