@@ -37,8 +37,8 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `assertEqual(label: string, config)`
 - `assertNotEqual(label: string, config)`
 - `evalEquals(testEqual[])`
-- `stringIncludes(label: string, config)`
-- `arrayIncludes(label: string, config)`
+- `stringContains(label: string, config)`
+- `arrayContains(label: string, config)`
 - `beNull(label: string, config)`
 - `beFalsy(label: string, config)`
 - `beTruthy(label: string, config)`
@@ -49,8 +49,8 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `assertNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
 - `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the data is not the same it throws an error
 - `fetchEqual(label: string, config)` evaluate if two values are equal. If the request data is not the same as expected, it throws an error
-- `ArrayIncludes(label: string, config)` evaluates that the array contains an specific data. if the array does not contain the data it throws an error
-- `stringIncludes(label: string, config)` evaluates if a string contains an specific word. if the string does not contain the word it throws an error
+- `arrayContains(label: string, config)` evaluates that the array contains an specific data. if the array does not contain the data it throws an error
+- `stringContains(label: string, config)` evaluates if a string contains an specific word. if the string does not contain the word it throws an error
 - `beNull(label: string, config)` evaluates if a data is null
 - `beFalsy(label: string, config)` evaluates if a data is a falsy value
 - `beTruthy(label: string, config)` evaluates if a data is a truthy value
@@ -64,6 +64,7 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `isUndefined(label: string, config)` evaluates if a data is undefined
 - `isString(label: string, config)` evaluates if a data is string
 - `isNumber(label: string, config)` evaluates if a data is number
+- `isEmpty(label: string, config)` evaluates if a data is empty
 - `assertSame(label: string, config)` evaluates if two values are strictly the same
 - `assertGreaterOrEqual(label: string, config)` evaluates whether the expected data is greater than or equal to another
 - `assertGreater(label: string, config)` evaluates whether the expected data is greater than another
@@ -102,7 +103,7 @@ import { Merlin } from "https://deno.land/x/merlin/mod.ts";
 - from `nest.land`
 
 ```typescript
-import { Merlin } from "https://x.nest.land/merlin@1.0.0/mod.ts";
+import { Merlin } from "https://x.nest.land/merlin@<version>/mod.ts";
 ```
 
 - from `github repo`
@@ -286,12 +287,12 @@ failures:
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (2ms)
 ```
 
-## stringIncludes
+## stringContains
 
 `example.test.ts`
 
 ```typescript
-test.stringIncludes("hello world contains world", {
+test.stringContains("hello world contains world", {
   Contains: () => "world",
   value: () => "Hello World",
 });
