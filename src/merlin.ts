@@ -10,15 +10,16 @@ import { asserts } from "../imports/testing.ts";
 
 import type {
   ArrayContains,
-  Config,
   Fetch_equal,
   NotEqual,
   StringIncludes,
   Tests,
-  testConfig,
   Length,
   throws,
   BoolLike,
+  Is,
+  Asserts,
+  AssertsStrict,
 } from "./types.ts";
 import { colors } from "../imports/fmt.ts";
 
@@ -43,11 +44,14 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: AssertsStrict<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
+
         if (strict) {
           asserts.assertStrictEquals(await expect(), await toBe(), message);
         } else {
@@ -75,11 +79,13 @@ export class Merlin {
       ignore,
       message,
       only,
+      before = async () => {},
     }: NotEqual
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assertNotEquals(await expect(), await notBe(), message);
       },
       ignore,
@@ -104,10 +110,13 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
+      before = async () => {},
     } of tests) {
       this.Test({
         name: label,
         fn: async () => {
+          await before();
+
           if (strict) {
             asserts.assertStrictEquals(await expect(), await toBe(), message);
           } else {
@@ -139,11 +148,14 @@ export class Merlin {
       message,
       only,
       config,
+      before = async () => {},
     }: Fetch_equal
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
+
         const response = await fetch(url, config);
         let data;
         if (type === "text") {
@@ -174,12 +186,14 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
+      before = async () => {},
     }: ArrayContains<T>
   ) {
     this.Test({
       name: label,
       ignore: ignore,
       fn: async () => {
+        await before();
         asserts.assertArrayIncludes(await value(), await Contains(), message);
       },
       only,
@@ -192,7 +206,7 @@ export class Merlin {
    * evaluates that the string contains the data.
    *
    */
-  public stringIncludes(
+  public stringContains(
     label: string,
     {
       Contains,
@@ -202,12 +216,14 @@ export class Merlin {
       ignore,
       message,
       only,
+      before = async () => {},
     }: StringIncludes
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assertStringIncludes(await value(), await Contains(), message);
       },
       only,
@@ -222,12 +238,21 @@ export class Merlin {
    */
   public beNull<T extends null>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
+    {
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assertEquals(await value(), null, message);
       },
       only,
@@ -242,12 +267,21 @@ export class Merlin {
    */
   public beFalsy<T extends BoolLike>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
+    {
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assert(!(await value()), message);
       },
       only,
@@ -262,12 +296,21 @@ export class Merlin {
    */
   public beTruthy<T extends BoolLike>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
+    {
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assert((await value()) && true, message);
       },
       only,
@@ -282,12 +325,21 @@ export class Merlin {
    */
   public isBigInt<T extends BigInt>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
+    {
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assert(typeof (await value()) === "bigint", message);
       },
       only,
@@ -302,12 +354,21 @@ export class Merlin {
    */
   public isZero<T extends number>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
+    {
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assert((await value()) - 0 === 0, message);
       },
       only,
@@ -322,12 +383,21 @@ export class Merlin {
    */
   public isNaN<T extends number>(
     label: string,
-    { value, ignore, message, Ops = true, Resources = true, only }: Config<T>
+    {
+      value,
+      ignore,
+      message,
+      Ops = true,
+      Resources = true,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
         asserts.assert(isNaN(await value()), message);
       },
       only,
@@ -350,12 +420,15 @@ export class Merlin {
       Resources = true,
       message,
       only,
+      before = async () => {},
     }: Length
   ) {
     this.Test({
       name: label,
       ignore,
       fn: async () => {
+        await before();
+
         asserts.assert(
           (await expect()).length === (await toBe()).length,
           message
@@ -381,11 +454,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<any>
+      before = async () => {},
+    }: Asserts<any>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assertMatch(await expect(), await toBe(), message);
       },
       ignore,
@@ -401,11 +476,20 @@ export class Merlin {
    */
   public isFunction<T extends Function>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
+    {
+      value,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assert(typeof (await value()) === "function", message);
       },
       ignore,
@@ -421,11 +505,21 @@ export class Merlin {
    */
   public isSymbol<T extends Symbol>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
+    {
+      value,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
+
         asserts.assert(typeof (await value()) === "symbol", message);
       },
       ignore,
@@ -439,13 +533,23 @@ export class Merlin {
    * evaluates if a data is undefined
    *
    */
-  public isUndefined<T extends undefined>(
+  public isUndefined<T extends undefined | void>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
+    {
+      value,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
+
         asserts.assert(typeof (await value()) === "undefined", message);
       },
       ignore,
@@ -461,11 +565,21 @@ export class Merlin {
    */
   public isString<T extends string>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
+    {
+      value,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
+
         asserts.assert(typeof (await value()) === "string", message);
       },
       ignore,
@@ -481,12 +595,61 @@ export class Merlin {
    */
   public isNumber<T extends number>(
     label: string,
-    { value, Ops = true, Resources = true, ignore, message, only }: Config<T>
+    {
+      value,
+      Ops = true,
+      Resources = true,
+      ignore,
+      message,
+      only,
+      before = async () => {},
+    }: Is<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
+
         asserts.assert(typeof (await value()) === "number", message);
+      },
+      ignore,
+      only,
+      sanitizeOps: Ops,
+      sanitizeResources: Resources,
+    });
+  }
+
+  /**
+   * evaluates if a data is empty
+   */
+  public isEmpty<T extends ArrayLike<any> | string | object>(
+    label: string,
+    {
+      value,
+      Ops,
+      Resources,
+      ignore,
+      message,
+      only,
+      before = async () => {},
+    }: Is<T>
+  ) {
+    this.Test({
+      name: label,
+      fn: async () => {
+        await before();
+
+        let count: number = 1;
+
+        if (typeof (await value()) === "string") {
+          count = ((await value()) as string).length;
+        } else if ((await value()) instanceof Array) {
+          count = ((await value()) as Array<any>).length;
+        } else if ((await value()) instanceof Object) {
+          count = Object.keys(await value()).length;
+        }
+
+        asserts.assertEquals(count, 0, message);
       },
       ignore,
       only,
@@ -508,11 +671,13 @@ export class Merlin {
       Ops = true,
       Resources = true,
       only,
+      before = async () => {},
     }: any
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         const _Contains = Object.keys(await Contains());
         const _value = Object.keys(await value());
 
@@ -553,11 +718,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: Asserts<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assertStrictEquals(await expect(), await toBe(), message);
       },
       ignore,
@@ -580,11 +747,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: Asserts<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assert((await expect()) >= (await toBe()), message);
       },
       ignore,
@@ -607,11 +776,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: Asserts<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assert((await expect()) > (await toBe()), message);
       },
       ignore,
@@ -634,11 +805,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: Asserts<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assert((await expect()) < (await toBe()), message);
       },
       ignore,
@@ -661,11 +834,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: Asserts<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assert((await expect()) <= (await toBe()), message);
       },
       ignore,
@@ -688,11 +863,13 @@ export class Merlin {
       ignore,
       message,
       only,
-    }: testConfig<T>
+      before = async () => {},
+    }: Asserts<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         asserts.assert((await expect()) instanceof (await toBe()), message);
       },
       ignore,
@@ -716,11 +893,13 @@ export class Merlin {
       message,
       only,
       strict,
-    }: testConfig<T>
+      before = async () => {},
+    }: AssertsStrict<T>
   ) {
     this.Test({
       name: label,
       fn: async () => {
+        await before();
         if (strict) {
           asserts.assertStrictEquals(await expect(), await toBe(), message);
         } else {
