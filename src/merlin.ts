@@ -43,6 +43,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: AssertsStrict<T>
@@ -61,6 +62,7 @@ export class Merlin {
       ignore,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
       only,
     });
   }
@@ -76,6 +78,7 @@ export class Merlin {
       notBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -92,6 +95,7 @@ export class Merlin {
       only: only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -109,6 +113,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     } of tests) {
@@ -126,6 +131,7 @@ export class Merlin {
         ignore,
         sanitizeOps: Ops,
         sanitizeResources: Resources,
+        sanitizeExit: Exit,
         only,
       });
     }
@@ -144,6 +150,7 @@ export class Merlin {
       url,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -169,6 +176,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -185,6 +193,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: ArrayContains<T>
@@ -199,6 +208,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -213,6 +223,7 @@ export class Merlin {
       value,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -229,6 +240,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -244,6 +256,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: Is<T>
@@ -258,6 +271,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -273,6 +287,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: Is<T>
@@ -287,6 +302,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -302,6 +318,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: Is<T>
@@ -316,6 +333,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -331,6 +349,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: Is<T>
@@ -345,6 +364,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -360,6 +380,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: Is<T>
@@ -374,6 +395,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -389,6 +411,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: Is<T>
@@ -403,6 +426,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -418,6 +442,7 @@ export class Merlin {
       ignore,
       Ops = true,
       Resources = true,
+      Exit = true,
       message,
       only,
       before = async () => {},
@@ -437,6 +462,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -451,6 +477,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -467,6 +494,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -480,6 +508,7 @@ export class Merlin {
       value,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -496,6 +525,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -509,6 +539,7 @@ export class Merlin {
       value,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -526,6 +557,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -539,6 +571,7 @@ export class Merlin {
       value,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -556,6 +589,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -569,6 +603,7 @@ export class Merlin {
       value,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -586,6 +621,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -599,6 +635,7 @@ export class Merlin {
       value,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -616,6 +653,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -628,6 +666,7 @@ export class Merlin {
       value,
       Ops,
       Resources,
+      Exit = true,
       ignore,
       message,
       only,
@@ -655,6 +694,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -670,6 +710,7 @@ export class Merlin {
       message,
       Ops = true,
       Resources = true,
+      Exit = true,
       only,
       before = async () => {},
     }: any
@@ -702,6 +743,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -715,6 +757,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -731,6 +774,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -744,6 +788,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -760,6 +805,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -773,6 +819,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -789,6 +836,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -802,6 +850,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -818,6 +867,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -831,6 +881,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -847,6 +898,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -860,6 +912,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -876,6 +929,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -889,6 +943,7 @@ export class Merlin {
       toBe,
       Ops = true,
       Resources = true,
+      Exit = true,
       ignore,
       message,
       only,
@@ -910,6 +965,7 @@ export class Merlin {
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -918,7 +974,7 @@ export class Merlin {
    */
   public assertThrows(
     label: string,
-    { throws, ErrorClass, Ops, Resources, ignore, message, only }: throws
+    { throws, ErrorClass, Ops, Resources, Exit ,ignore, message, only }: throws
   ) {
     this.Test({
       name: label,
@@ -935,6 +991,7 @@ export class Merlin {
       ignore,
       only,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 
@@ -943,7 +1000,7 @@ export class Merlin {
    */
   public assertThrowsSync(
     label: string,
-    { throws, ErrorClass, Ops, Resources, ignore, message, only }: throws
+    { throws, ErrorClass, Ops, Resources, Exit, ignore, message, only }: throws
   ) {
     this.Test({
       name: label,
@@ -960,6 +1017,7 @@ export class Merlin {
       ignore,
       only,
       sanitizeResources: Resources,
+      sanitizeExit: Exit,
     });
   }
 

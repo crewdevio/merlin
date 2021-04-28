@@ -9,6 +9,8 @@ interface Fields {
   Resources?: boolean;
   /** receives a boolean, only tests that have only in true will be executed, the rest will not run */
   only?: boolean;
+  //ensures that tested code doesn't call Deno.exit() signaling a false test success.
+  Exit?: boolean;
   /** execute any action before run test */
   before?: () => void | undefined | Promise<void | undefined>;
 }
