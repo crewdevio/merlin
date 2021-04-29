@@ -699,45 +699,6 @@ export class Merlin {
   }
 
   /**
-   * evaluates if a data is empty
-   */
-  public isEmpty<T extends ArrayLike<any> | string | object>(
-    label: string,
-    {
-      value,
-      Ops,
-      Resources,
-      ignore,
-      message,
-      only,
-      before = async () => {},
-    }: Is<T>
-  ) {
-    this.Test({
-      name: label,
-      fn: async () => {
-        await before();
-
-        let count: number = 1;
-
-        if (typeof (await value()) === "string") {
-          count = ((await value()) as string).length;
-        } else if ((await value()) instanceof Array) {
-          count = ((await value()) as Array<any>).length;
-        } else if ((await value()) instanceof Object) {
-          count = Object.keys(await value()).length;
-        }
-
-        asserts.assertEquals(count, 0, message);
-      },
-      ignore,
-      only,
-      sanitizeOps: Ops,
-      sanitizeResources: Resources,
-    });
-  }
-
-  /**
    * expect an object to contain the properties in its value
    */
   public haveProperty(
