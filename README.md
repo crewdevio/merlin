@@ -16,7 +16,7 @@
      <img alt="GitHub license" src="https://img.shields.io/github/license/crewdevio/merlin">
    </a>
    <a href="https://deno.land">
-     <img src="https://img.shields.io/badge/deno-%5E1.2.0-green?logo=deno"/>
+     <img src="https://img.shields.io/badge/deno-%5E1.10.2-green?logo=deno"/>
    </a>
    <a href="https://nest.land/package/merlin">
      <img src="https://nest.land/badge.svg" />
@@ -100,12 +100,6 @@ you can get Merlin from different url.
 import { Merlin } from "https://deno.land/x/merlin/mod.ts";
 ```
 
-- from `nest.land`
-
-```typescript
-import { Merlin } from "https://x.nest.land/merlin@<version>/mod.ts";
-```
-
 - from `github repo`
 
 ```typescript
@@ -169,6 +163,7 @@ all assertions have parameters that they can receive, these parameters can chang
 - `Ops (optional)` receives a boolean, closes all the operations that never end, for example `Deno.open("file.txt")`. by default is `true`.
 - `Resources (optional)` receives a boolean, terminates all asynchronous processes that interact with the system. by default is `true`.
 - `only (optional)` receives a boolean, only tests that have `only in true` will be executed, the rest will not run.
+- `Exit (optional)` receives a boolean,this is enabled by default for all tests, but can be disabled by setting the Exit boolean to false in thetest definition
 
 ### about resources and ops sanitizers
 
@@ -379,9 +374,7 @@ It's easy to use. `example`:
 ```typescript
 import { Maven } from "https://deno.land/x/merlin/mod.ts";
 
-const benchmark = new Maven();
-
-benchmark.Bench({
+Maven.Bench({
   name: "Sorting arrays",
   fn: () => {
     new Array(10000).fill(Math.random()).sort();
@@ -389,7 +382,7 @@ benchmark.Bench({
   steps: 1000,
 });
 
-benchmark.runBench();
+Maven.runBench();
 ```
 
 this is the terminal output
@@ -409,9 +402,7 @@ you can see the details at the end of the benchmark using
 ```typescript
 import { Maven } from "https://deno.land/x/merlin/mod.ts";
 
-const benchmark = new Maven();
-
-benchmark.Bench({
+Maven.Bench({
   name: "Sorting arrays",
   fn: () => {
     new Array(10000).fill(Math.random()).sort();
@@ -419,7 +410,7 @@ benchmark.Bench({
   steps: 1000,
 });
 
-benchmark.runBench().then(benchmark.Result());
+Maven.runBench().then(Maven.Result());
 ```
 
 It has a table with the detailed values

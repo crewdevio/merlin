@@ -6,26 +6,24 @@
  *
  */
 
-import {
-  prettyBenchmarkProgress,
-  prettyBenchmarkResult,
-  prettyBenchmarkDown,
-} from "../imports/pretty_benching.ts";
-import type { Thresholds, Bench, EmitConfig } from "./types.ts";
-import { colors } from "../imports/fmt.ts";
-import { bench } from "../imports/testing.ts";
+import type { Thresholds, Bench } from "./types.ts";
+import { pretty_benching } from "../deps.ts";
+import { colors } from "../deps.ts";
+import { bench } from "../deps.ts";
+
+const { prettyBenchmarkProgress, prettyBenchmarkResult } = pretty_benching;
 
 /**
  * create simple and scalable  benchmarks for typescript and javascript, running on deno
  */
 export class Maven {
-  private bench = bench.bench;
+  private static bench = bench.bench;
 
-  private thresholds: Thresholds = {};
+  private static thresholds: Thresholds = {};
 
-  private config: bench.BenchmarkRunOptions = {};
+  protected static config: bench.BenchmarkRunOptions = {};
 
-  private indicators = [
+  private static indicators = [
     {
       benches: /./,
       tableColor: colors.cyan,
@@ -33,18 +31,32 @@ export class Maven {
     },
   ];
 
-  private runIndicator = [{ benches: /./, modFn: () => "==> " }];
+  private static runIndicator = [{ benches: /./, modFn: () => "==> " }];
 
-  private addThresholds(name: string) {
-    this.thresholds[name] = { green: 70, yellow: 90 };
+  private static addThresholds(name: string) {
+    Maven.thresholds[name] = { green: 70, yellow: 90 };
   }
 
   /**
-   * 
+   * create bench mark action.
+   *
+   * `example:`
+   * ```typescript
+   * import { Maven } from "./mod.ts";
+   *
+   * Maven.Bench({
+   *  name: "sort",
+   *  fn() {
+   *    [].fill(0).sort();
+   *  },
+   *  steps: 1000,
+   * });
+   *
+   * ```
    */
-  public Bench({ fn, name, steps = 1 }: Bench) {
-    this.addThresholds(name);
-    this.bench({
+  public static Bench({ fn, name, steps = 1 }: Bench) {
+    Maven.addThresholds(name);
+    Maven.bench({
       name,
       func(bench) {
         bench.start();
@@ -57,27 +69,60 @@ export class Maven {
 
   /**
    * execute the benchmarks
-   * @param config
+   *
+   *`example:`
+   * ```typescript
+   * import { Maven } from "./mod.ts";
+   *
+   * Maven.Bench({
+   *  name: "sort",
+   *  fn() {
+   *    [].fill(0).sort();
+   *  },
+   *  steps: 1000,
+   * });
+   *
+   * Maven.runBench();
+   *
+   *```
+   *
+   * @param {bench.BenchmarkRunOptions} config
    */
-  public async runBench(config?: bench.BenchmarkRunOptions) {
-    this.config = config as bench.BenchmarkRunOptions;
+  public static async runBench(config?: bench.BenchmarkRunOptions) {
+    Maven.config = config as bench.BenchmarkRunOptions;
     return bench.runBenchmarks(
       { silent: true, ...config },
       prettyBenchmarkProgress({
-        indicators: this.runIndicator,
-        thresholds: this.thresholds,
+        indicators: Maven.runIndicator,
+        thresholds: Maven.thresholds,
       })
     );
   }
 
   /**
    * prints the results table at the end of the benchmarks
-   * @param graphBars
+   *
+   * `example:`
+   * ```typescript
+   * import { Maven } from "./mod.ts";
+   *
+   * Maven.Bench({
+   *  name: "sort",
+   *  fn() {
+   *    [].fill(0).sort();
+   *  },
+   *  steps: 1000,
+   * });
+   *
+   * Maven.runBench().then(Maven.Result(2));
+   *
+   * ```
+   * @param {number} graphBars
    */
-  public Result(graphBars = 5) {
+  public static Result(graphBars: number = 3) {
     return prettyBenchmarkResult({
-      thresholds: this.thresholds,
-      indicators: this.indicators,
+      thresholds: Maven.thresholds,
+      indicators: Maven.indicators,
       parts: {
         extraMetrics: true,
         graph: true,
@@ -85,38 +130,5 @@ export class Maven {
         graphBars,
       },
     });
-  }
-
-  /**
-   * create a markdown file with the results of the benchmarks, it can also be issued in json format
-   * @param config
-   */
-  public static Emit(config: EmitConfig) {
-    const _fileName = `/${
-      config.fileName ? config.fileName : "out_put"
-    }-${new Date().getTime()}`;
-
-    return prettyBenchmarkDown(
-      (markdown: string) => {
-        const create = Deno.createSync(`${Deno.cwd()}${_fileName}.md`);
-        Deno.writeTextFileSync(`.${_fileName}.md`, markdown);
-        create.close();
-      },
-      {
-        title: config.title ? config.title : "Maven Benchmark output",
-        description: config.description ? config.description : "",
-        afterTables: (result: any) => {
-          if (config.json) {
-            const create = Deno.createSync(`${Deno.cwd()}${_fileName}.json`);
-            Deno.writeTextFileSync(
-              `.${_fileName}.json`,
-              JSON.stringify(result, null, 2)
-            );
-            create.close();
-          }
-          return "";
-        },
-      }
-    );
   }
 }
