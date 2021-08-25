@@ -46,7 +46,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: AssertsStrict<T>
   ) {
@@ -66,7 +66,7 @@ export class Merlin {
       sanitizeResources: Resources,
       sanitizeExit: Exit,
       only,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -85,7 +85,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: NotEqual
   ) {
@@ -100,7 +100,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -120,7 +120,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     } of tests) {
       this.Test({
@@ -139,7 +139,7 @@ export class Merlin {
         sanitizeResources: Resources,
         sanitizeExit: Exit,
         only,
-        // permissions: perms,
+        permissions: perms,
       });
     }
   }
@@ -162,7 +162,7 @@ export class Merlin {
       message,
       only,
       config,
-      // perms,
+      perms,
       before = async () => {},
     }: Fetch_equal
   ) {
@@ -185,7 +185,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -204,7 +204,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: ArrayContains<T>
   ) {
@@ -213,13 +213,18 @@ export class Merlin {
       ignore: ignore,
       fn: async () => {
         await before();
+        // check if an array if empty
+        if ((await value())?.length === 0 || (await Contains())?.length === 0) {
+          asserts.assert(false, `cannot pass an empty array`);
+        }
+
         asserts.assertArrayIncludes(await value(), await Contains(), message);
       },
       only,
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -238,7 +243,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: StringIncludes
   ) {
@@ -253,7 +258,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -271,7 +276,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -286,7 +291,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -304,7 +309,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -319,7 +324,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -337,7 +342,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -352,7 +357,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -370,7 +375,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -385,7 +390,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -403,7 +408,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -418,7 +423,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -436,7 +441,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -451,7 +456,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -470,7 +475,7 @@ export class Merlin {
       Exit = true,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Length
   ) {
@@ -489,7 +494,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -508,7 +513,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<any>
   ) {
@@ -523,7 +528,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -541,7 +546,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -556,7 +561,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -574,7 +579,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -590,7 +595,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -608,7 +613,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -624,7 +629,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -642,7 +647,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -658,7 +663,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -676,7 +681,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -692,7 +697,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -709,7 +714,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Is<T>
   ) {
@@ -735,7 +740,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -753,7 +758,7 @@ export class Merlin {
       Resources = true,
       Exit = true,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: ContainsProperty
   ) {
@@ -786,7 +791,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -804,7 +809,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<T>
   ) {
@@ -819,7 +824,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -837,7 +842,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<T>
   ) {
@@ -852,7 +857,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -870,7 +875,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<T>
   ) {
@@ -885,7 +890,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -903,7 +908,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<T>
   ) {
@@ -918,7 +923,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -936,7 +941,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<T>
   ) {
@@ -951,7 +956,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -969,7 +974,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: Asserts<T>
   ) {
@@ -984,7 +989,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -1003,7 +1008,7 @@ export class Merlin {
       message,
       only,
       strict,
-      // perms,
+      perms,
       before = async () => {},
     }: AssertsStrict<T>
   ) {
@@ -1022,7 +1027,7 @@ export class Merlin {
       sanitizeOps: Ops,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -1040,7 +1045,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: throws
   ) {
@@ -1061,7 +1066,7 @@ export class Merlin {
       only,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 
@@ -1079,7 +1084,7 @@ export class Merlin {
       ignore,
       message,
       only,
-      // perms,
+      perms,
       before = async () => {},
     }: throws
   ) {
@@ -1100,7 +1105,7 @@ export class Merlin {
       only,
       sanitizeResources: Resources,
       sanitizeExit: Exit,
-      // permissions: perms,
+      permissions: perms,
     });
   }
 

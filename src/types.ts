@@ -1,12 +1,4 @@
-type Perms = {
-  env?: boolean | "inherit";
-  hrtime?: boolean | "inherit";
-  net?: boolean | "inherit" | string[];
-  plugin?: boolean | "inherit";
-  read?: boolean | "inherit" | (string | URL)[];
-  run?: boolean | "inherit";
-  write?: boolean | "inherit" | (string | URL)[];
-};
+type Perms = Deno.TestDefinition["permissions"];
 
 interface Fields {
   /** receives a boolean to ignore the test in case the value is true */
@@ -23,8 +15,8 @@ interface Fields {
   Exit?: boolean;
   /** execute any action before run test */
   before?: () => void | undefined | Promise<void | undefined>;
-  // TODO(buttercubz): enable before
-  // perms?: "inherit" | "none" | Perms;
+  /** add individual test perms */
+  perms?: "inherit" | "none" | Perms;
 }
 
 interface Strict {
