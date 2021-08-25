@@ -1,3 +1,5 @@
+type Perms = Deno.TestDefinition["permissions"];
+
 interface Fields {
   /** receives a boolean to ignore the test in case the value is true */
   ignore?: boolean;
@@ -9,8 +11,12 @@ interface Fields {
   Resources?: boolean;
   /** receives a boolean, only tests that have only in true will be executed, the rest will not run */
   only?: boolean;
+  /** ensures that tested code doesn't call Deno.exit() signaling a false test success. */
+  Exit?: boolean;
   /** execute any action before run test */
   before?: () => void | undefined | Promise<void | undefined>;
+  /** add individual test perms */
+  perms?: "inherit" | "none" | Perms;
 }
 
 interface Strict {
@@ -57,6 +63,12 @@ export interface ArrayContains<T extends unknown> extends Fields {
 export interface StringIncludes extends Fields {
   /** returns the data expected to be of that type */
   value(): Promise<string> | string;
+  Contains(): Promise<string> | string;
+}
+
+export interface ContainsProperty extends Fields {
+  /** returns the data expected to be of that type */
+  value(): Promise<object | any> | object | any;
   Contains(): Promise<string> | string;
 }
 
