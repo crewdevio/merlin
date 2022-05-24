@@ -6,7 +6,7 @@
  *
  */
 
-import { asserts } from "../deps.ts";
+import { asserts } from "trex_testing";
 import type {
   ArrayContains,
   Fetch_equal,
@@ -22,7 +22,7 @@ import type {
   ContainsProperty,
 } from "./types.ts";
 
-import { colors } from "../deps.ts";
+import * as colors from "fmt/colors.ts";
 
 /**
  * testing framework for deno inspire in jest 🧙‍♂️
