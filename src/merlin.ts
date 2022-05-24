@@ -3,23 +3,22 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
  */
 
 import { asserts } from "trex_testing";
 import type {
   ArrayContains,
+  Asserts,
+  AssertsStrict,
+  BoolLike,
+  ContainsProperty,
   Fetch_equal,
+  Is,
+  Length,
   NotEqual,
   StringIncludes,
   Tests,
-  Length,
   throws,
-  BoolLike,
-  Is,
-  Asserts,
-  AssertsStrict,
-  ContainsProperty,
 } from "./types.ts";
 
 import * as colors from "fmt/colors.ts";
@@ -48,7 +47,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: AssertsStrict<T>
+    }: AssertsStrict<T>,
   ) {
     this.Test({
       name: label,
@@ -87,7 +86,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: NotEqual
+    }: NotEqual,
   ) {
     this.Test({
       name: label,
@@ -109,20 +108,22 @@ export class Merlin {
    * if the data is not the same it throws an error.
    */
   public evalEquals<T>(tests: Tests<T>) {
-    for (const {
-      expect,
-      label,
-      toBe,
-      ignore,
-      strict,
-      message,
-      Ops = true,
-      Resources = true,
-      Exit = true,
-      only,
-      perms,
-      before = async () => {},
-    } of tests) {
+    for (
+      const {
+        expect,
+        label,
+        toBe,
+        ignore,
+        strict,
+        message,
+        Ops = true,
+        Resources = true,
+        Exit = true,
+        only,
+        perms,
+        before = async () => {},
+      } of tests
+    ) {
       this.Test({
         name: label,
         fn: async () => {
@@ -164,7 +165,7 @@ export class Merlin {
       config,
       perms,
       before = async () => {},
-    }: Fetch_equal
+    }: Fetch_equal,
   ) {
     this.Test({
       name: label,
@@ -206,7 +207,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: ArrayContains<T>
+    }: ArrayContains<T>,
   ) {
     this.Test({
       name: label,
@@ -230,7 +231,6 @@ export class Merlin {
 
   /**
    * evaluates that the string contains the data.
-   *
    */
   public stringContains(
     label: string,
@@ -245,7 +245,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: StringIncludes
+    }: StringIncludes,
   ) {
     this.Test({
       name: label,
@@ -264,7 +264,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is null.
-   *
    */
   public beNull<T extends null>(
     label: string,
@@ -278,7 +277,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -297,7 +296,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is a falsy value.
-   *
    */
   public beFalsy<T extends BoolLike>(
     label: string,
@@ -311,7 +309,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -330,7 +328,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is a truthy value.
-   *
    */
   public beTruthy<T extends BoolLike>(
     label: string,
@@ -344,7 +341,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -363,7 +360,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is a bigInt value.
-   *
    */
   public isBigInt<T extends BigInt>(
     label: string,
@@ -377,7 +373,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -396,7 +392,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is zero.
-   *
    */
   public isZero<T extends number>(
     label: string,
@@ -410,7 +405,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -429,7 +424,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is NaN value.
-   *
    */
   public isNaN<T extends number>(
     label: string,
@@ -443,7 +437,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -462,7 +456,6 @@ export class Merlin {
 
   /**
    * evaluates if a data have a x length
-   *
    */
   public sameLength(
     label: string,
@@ -477,7 +470,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Length
+    }: Length,
   ) {
     this.Test({
       name: label,
@@ -487,7 +480,7 @@ export class Merlin {
 
         asserts.assert(
           (await expect()).length === (await toBe()).length,
-          message
+          message,
         );
       },
       only,
@@ -500,7 +493,6 @@ export class Merlin {
 
   /**
    * evaluates if a regular expression match
-   *
    */
   public assertRegExp(
     label: string,
@@ -515,7 +507,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<any>
+    }: Asserts<any>,
   ) {
     this.Test({
       name: label,
@@ -534,7 +526,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is a function
-   *
    */
   public isFunction<T extends Function>(
     label: string,
@@ -548,7 +539,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -567,7 +558,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is a symbol
-   *
    */
   public isSymbol<T extends Symbol>(
     label: string,
@@ -581,7 +571,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -601,7 +591,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is undefined
-   *
    */
   public isUndefined<T extends undefined | void>(
     label: string,
@@ -615,7 +604,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -635,7 +624,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is string
-   *
    */
   public isString<T extends string>(
     label: string,
@@ -649,7 +637,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -669,7 +657,6 @@ export class Merlin {
 
   /**
    * evaluates if a data is number
-   *
    */
   public isNumber<T extends number>(
     label: string,
@@ -683,7 +670,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -716,7 +703,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Is<T>
+    }: Is<T>,
   ) {
     this.Test({
       name: label,
@@ -760,7 +747,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: ContainsProperty
+    }: ContainsProperty,
   ) {
     this.Test({
       name: label,
@@ -774,8 +761,8 @@ export class Merlin {
           if (!_Contains.includes(keys)) {
             errorTrace.push(
               colors.green(
-                `\n\ndoes not have the property: ${colors.red(keys)}\n`
-              )
+                `\n\ndoes not have the property: ${colors.red(keys)}\n`,
+              ),
             );
           }
         }
@@ -811,7 +798,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<T>
+    }: Asserts<T>,
   ) {
     this.Test({
       name: label,
@@ -844,7 +831,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<T>
+    }: Asserts<T>,
   ) {
     this.Test({
       name: label,
@@ -877,7 +864,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<T>
+    }: Asserts<T>,
   ) {
     this.Test({
       name: label,
@@ -910,7 +897,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<T>
+    }: Asserts<T>,
   ) {
     this.Test({
       name: label,
@@ -943,7 +930,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<T>
+    }: Asserts<T>,
   ) {
     this.Test({
       name: label,
@@ -976,7 +963,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: Asserts<T>
+    }: Asserts<T>,
   ) {
     this.Test({
       name: label,
@@ -1010,7 +997,7 @@ export class Merlin {
       strict,
       perms,
       before = async () => {},
-    }: AssertsStrict<T>
+    }: AssertsStrict<T>,
   ) {
     this.Test({
       name: label,
@@ -1047,7 +1034,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: throws
+    }: throws,
   ) {
     this.Test({
       name: label,
@@ -1058,7 +1045,7 @@ export class Merlin {
             throws();
           },
           ErrorClass,
-          message
+          message,
         );
       },
       sanitizeOps: Ops,
@@ -1086,7 +1073,7 @@ export class Merlin {
       only,
       perms,
       before = async () => {},
-    }: throws
+    }: throws,
   ) {
     this.Test({
       name: label,
@@ -1097,7 +1084,7 @@ export class Merlin {
             throws();
           },
           ErrorClass,
-          message
+          message,
         );
       },
       sanitizeOps: Ops,

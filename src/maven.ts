@@ -3,11 +3,13 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
  */
 
-import type { Thresholds, Bench } from "./types.ts";
-import { prettyBenchmarkProgress, prettyBenchmarkResult } from "pretty_benching";
+import type { Bench, Thresholds } from "./types.ts";
+import {
+  prettyBenchmarkProgress,
+  prettyBenchmarkResult,
+} from "pretty_benching";
 import * as colors from "fmt/colors.ts";
 import { bench } from "trex_testing";
 
@@ -68,7 +70,7 @@ export class Maven {
   /**
    * execute the benchmarks
    *
-   *`example:`
+   * `example:`
    * ```typescript
    * import { Maven } from "./mod.ts";
    *
@@ -82,7 +84,7 @@ export class Maven {
    *
    * Maven.runBench();
    *
-   *```
+   * ```
    *
    * @param {bench.BenchmarkRunOptions} config
    */
@@ -93,7 +95,7 @@ export class Maven {
       prettyBenchmarkProgress({
         indicators: Maven.runIndicator,
         thresholds: Maven.thresholds,
-      })
+      }),
     );
   }
 

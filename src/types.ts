@@ -37,9 +37,7 @@ export interface Asserts<T extends unknown | any> extends Fields {
 }
 
 export interface AssertsStrict<T extends unknown | any>
-  extends Fields,
-    Strict,
-    Asserts<T> {}
+  extends Fields, Strict, Asserts<T> {}
 
 export interface Test<T> extends Fields, AssertsStrict<T> {
   /** add a description to the test */
