@@ -45,12 +45,18 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 
 ### All Matchers
 
-- `assertEqual(label: string, config)` Compare two values and throws an error if the expect and toBe are not equal
-- `assertNotEqual(label: string, config)` Compare two values and throws an error if the expect and notBe are equal
-- `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the data is not the same it throws an error
-- `fetchEqual(label: string, config)` evaluate if two values are equal. If the request data is not the same as expected, it throws an error
-- `arrayContains(label: string, config)` evaluates that the array contains an specific data. if the array does not contain the data it throws an error
-- `stringContains(label: string, config)` evaluates if a string contains an specific word. if the string does not contain the word it throws an error
+- `assertEqual(label: string, config)` Compare two values and throws an error if
+  the expect and toBe are not equal
+- `assertNotEqual(label: string, config)` Compare two values and throws an error
+  if the expect and notBe are equal
+- `evalEquals(testEqual[])` evaluate multiple equality tests in an array. If the
+  data is not the same it throws an error
+- `fetchEqual(label: string, config)` evaluate if two values are equal. If the
+  request data is not the same as expected, it throws an error
+- `arrayContains(label: string, config)` evaluates that the array contains an
+  specific data. if the array does not contain the data it throws an error
+- `stringContains(label: string, config)` evaluates if a string contains an
+  specific word. if the string does not contain the word it throws an error
 - `beNull(label: string, config)` evaluates if a data is null
 - `beFalsy(label: string, config)` evaluates if a data is a falsy value
 - `beTruthy(label: string, config)` evaluates if a data is a truthy value
@@ -65,21 +71,30 @@ Merlin is a [Jest](https://jestjs.io/en/)-inspired testing framework for deno.
 - `isString(label: string, config)` evaluates if a data is string
 - `isNumber(label: string, config)` evaluates if a data is number
 - `isEmpty(label: string, config)` evaluates if a data is empty
-- `assertSame(label: string, config)` evaluates if two values are strictly the same
-- `assertGreaterOrEqual(label: string, config)` evaluates whether the expected data is greater than or equal to another
-- `assertGreater(label: string, config)` evaluates whether the expected data is greater than another
-- `assertLess(label: string, config)` evaluates if the expected data is less than another
-- `assertLessOrEqual(label: string, config)` evaluates if the expected data is less than or equal to another
-- `assertInstanceOf(label: string, config)` evaluates that one object is an instance of another
-- `assertFloat(label: string, config)` evaluates if two decimal numbers are equal
+- `assertSame(label: string, config)` evaluates if two values are strictly the
+  same
+- `assertGreaterOrEqual(label: string, config)` evaluates whether the expected
+  data is greater than or equal to another
+- `assertGreater(label: string, config)` evaluates whether the expected data is
+  greater than another
+- `assertLess(label: string, config)` evaluates if the expected data is less
+  than another
+- `assertLessOrEqual(label: string, config)` evaluates if the expected data is
+  less than or equal to another
+- `assertInstanceOf(label: string, config)` evaluates that one object is an
+  instance of another
+- `assertFloat(label: string, config)` evaluates if two decimal numbers are
+  equal
 - `assertThrows(label: string, config)` expect it throws an error
 - `assertThrowsSync(label: string, config)` expect it throws an async error
-- `haveProperty(label: string, config)` expect an object to contain the properties in its value
+- `haveProperty(label: string, config)` expect an object to contain the
+  properties in its value
 
 #### Statics
 
 - `Merlin.Error(msg?: string)` force to throw an error
-- `Merlin.Unimplemented(msg?: string)` Use this to throw a method not implemented error
+- `Merlin.Unimplemented(msg?: string)` Use this to throw a method not
+  implemented error
 - `Merlin.Unreachable()` Use this to throw an Unreachable method error
 
 ### Install Merlin
@@ -150,28 +165,43 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (18ms
 
 ### Parameters
 
-all assertions have parameters that they can receive, these parameters can change the behavior of the tests.
+all assertions have parameters that they can receive, these parameters can
+change the behavior of the tests.
 
 - `label` add a description to the test.
 - `expect()` this function returns the data and then tests with its matchmaker.
 - `toBe()` this function returns the data that we hope is correct.
 - `notBe()` this function returns the data that we hope it is incorrect.
 - `value()` returns the data expected to be of that type.
-- `ignore (optional)` receives a boolean to ignore the test in case the value is true.
-- `strict (optional)` receives a boolean, it does a strict comparison of the `expect()` and `toBe()` values.
-- `message (optional)` receives a string with the message to display in case the test fails.
-- `Ops (optional)` receives a boolean, closes all the operations that never end, for example `Deno.open("file.txt")`. by default is `true`.
-- `Resources (optional)` receives a boolean, terminates all asynchronous processes that interact with the system. by default is `true`.
-- `only (optional)` receives a boolean, only tests that have `only in true` will be executed, the rest will not run.
-- `Exit (optional)` receives a boolean,this is enabled by default for all tests, but can be disabled by setting the Exit boolean to false in thetest definition
+- `ignore (optional)` receives a boolean to ignore the test in case the value is
+  true.
+- `strict (optional)` receives a boolean, it does a strict comparison of the
+  `expect()` and `toBe()` values.
+- `message (optional)` receives a string with the message to display in case the
+  test fails.
+- `Ops (optional)` receives a boolean, closes all the operations that never end,
+  for example `Deno.open("file.txt")`. by default is `true`.
+- `Resources (optional)` receives a boolean, terminates all asynchronous
+  processes that interact with the system. by default is `true`.
+- `only (optional)` receives a boolean, only tests that have `only in true` will
+  be executed, the rest will not run.
+- `Exit (optional)` receives a boolean,this is enabled by default for all tests,
+  but can be disabled by setting the Exit boolean to false in thetest definition
 
 ### about resources and ops sanitizers
 
-Certain actions in Deno create resources in the resource table . These resources should be closed after you are done using them.
+Certain actions in Deno create resources in the resource table . These resources
+should be closed after you are done using them.
 
-For each test definition, the test runner checks that all resources created in this test have been closed. This is to prevent resource 'leaks'. This is enabled by default for all tests, but can be disabled by setting the sanitizeResources boolean to false in the test definition.
+For each test definition, the test runner checks that all resources created in
+this test have been closed. This is to prevent resource 'leaks'. This is enabled
+by default for all tests, but can be disabled by setting the sanitizeResources
+boolean to false in the test definition.
 
-The same is true for async operation like interacting with the filesystem. The test runner checks that each operation you start in the test is completed before the end of the test. This is enabled by default for all tests, but can be disabled by setting the sanitizeOps boolean to false in the test definition.
+The same is true for async operation like interacting with the filesystem. The
+test runner checks that each operation you start in the test is completed before
+the end of the test. This is enabled by default for all tests, but can be
+disabled by setting the sanitizeOps boolean to false in the test definition.
 
 ```typescript
 async function writeSomething(): Promise<string> {
@@ -340,7 +370,8 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (342m
 
 ### Using async code.
 
-you can use asynchronous code by adding `async` in `expect`, `toBe` and `value` functions.
+you can use asynchronous code by adding `async` in `expect`, `toBe` and `value`
+functions.
 
 example
 
@@ -361,7 +392,8 @@ test.assertEqual("get error 404", {
 });
 ```
 
-> **Note**: all the methods of the merlin class support async function since they have top level await
+> **Note**: all the methods of the merlin class support async function since
+> they have top level await
 
 ![merlin gif](https://cdn.discordapp.com/attachments/656976424778989602/735287285519745114/mer.gif)
 
@@ -416,7 +448,6 @@ Maven.runBench().then(Maven.Result());
 It has a table with the detailed values
 
 ```sh
-
 ▒▒▒▒▒▒▒▒ Benchmarking finished
 
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
@@ -436,11 +467,11 @@ It has a table with the detailed values
 │    8.1447 ms _[     1][ 0.1%] │=                                                          │
 │                               │                                                           │
 └───────────────────────────────┴───────────────────────────────────────────────────────────┘
-
 ```
 
 ### Contributing
 
-contributions are welcome, create a pull request and send us your feature, first check the [CONTRIBUTING GUIDELINES](CONTRIBUTING.md).
+contributions are welcome, create a pull request and send us your feature, first
+check the [CONTRIBUTING GUIDELINES](CONTRIBUTING.md).
 
 ### [LICENSE MIT](https://opensource.org/licenses/MIT)
