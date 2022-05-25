@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { asserts } from "../deps.ts";
+import { asserts, colors } from "../deps.ts";
 import type {
   ArrayContains,
   Asserts,
@@ -20,8 +20,6 @@ import type {
   Tests,
   throws,
 } from "./types.ts";
-
-import { colors } from "../deps.ts";
 
 /**
  * testing framework for deno inspire in jest 🧙‍♂️

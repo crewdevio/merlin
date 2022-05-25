@@ -6,9 +6,7 @@
  */
 
 import type { Thresholds, Bench } from "./types.ts";
-import { pretty_benching } from "../deps.ts";
-import { colors } from "../deps.ts";
-import { bench } from "../deps.ts";
+import { pretty_benching, colors, bench } from "../deps.ts";
 
 const { prettyBenchmarkProgress, prettyBenchmarkResult } = pretty_benching;
 
@@ -94,7 +92,7 @@ export class Maven {
       prettyBenchmarkProgress({
         indicators: Maven.runIndicator,
         thresholds: Maven.thresholds,
-      }),
+      })
     );
   }
 
