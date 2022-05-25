@@ -11,7 +11,7 @@ import {
   prettyBenchmarkResult,
 } from "pretty_benching";
 import * as colors from "fmt/colors.ts";
-import { bench } from "trex_testing";
+import * as bench from "testing/bench.ts";
 
 /**
  * create simple and scalable  benchmarks for typescript and javascript, running on deno

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { asserts } from "trex_testing";
+import * as asserts from "testing/asserts.ts";
 import type {
   ArrayContains,
   Asserts,
