@@ -1,6 +1,6 @@
 {
   "scripts": {
     "test": "deno test -A --unstable --import-map=./import_map.json",
-    "log": "trex exec ghlog crewdevio/piwo"
+    "log": "trex exec ghlog crewdevio/merlin"
   }
 }

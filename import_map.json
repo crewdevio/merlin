@@ -2,6 +2,6 @@
   "imports": {
     "fmt/": "https://deno.land/std@0.140.0/fmt/",
     "pretty_benching": "https://deno.land/x/pretty_benching@v0.3.3/mod.ts",
-    "testing/": "https://deno.land/std@0.87.0/testing/"
+    "testing/": "https://deno.land/std@0.88.0/testing/"
   }
 }
