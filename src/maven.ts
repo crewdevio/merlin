@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Bench, Thresholds } from "./types.ts";
-import {
-  prettyBenchmarkProgress,
-  prettyBenchmarkResult,
-} from "pretty_benching";
-import * as colors from "fmt/colors.ts";
-import * as bench from "testing/bench.ts";
+import type { Thresholds, Bench } from "./types.ts";
+import { pretty_benching } from "../deps.ts";
+import { colors } from "../deps.ts";
+import { bench } from "../deps.ts";
+
+const { prettyBenchmarkProgress, prettyBenchmarkResult } = pretty_benching;
 
 /**
  * create simple and scalable  benchmarks for typescript and javascript, running on deno
